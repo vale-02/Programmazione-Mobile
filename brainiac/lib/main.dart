@@ -7,8 +7,8 @@ import 'package:path_provider/path_provider.dart';
 void main() async {
   //Inizializzazione database Hive
   WidgetsFlutterBinding.ensureInitialized();
-  final directory = await getApplicationDocumentsDirectory();
-  Hive.init(directory.path);
+
+  await Hive.initFlutter();
   Hive.registerAdapter(ExamAdapter());
 
   runApp(const MyApp());

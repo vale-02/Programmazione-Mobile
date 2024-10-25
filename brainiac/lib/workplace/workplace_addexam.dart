@@ -1,5 +1,7 @@
+import 'package:brainiac/model/exam.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
 
 class WorkplaceAddexam extends StatefulWidget {
   const WorkplaceAddexam({super.key});
@@ -15,6 +17,11 @@ class _WorkplaceAddexam extends State<WorkplaceAddexam> {
   void dispose() {
     _nameController.dispose();
     super.dispose();
+  }
+
+  int _getNextId() {
+    final box = Hive.box('ExamBox');
+    return box.length;
   }
 
   @override
@@ -37,7 +44,14 @@ class _WorkplaceAddexam extends State<WorkplaceAddexam> {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  final value = Exam(
+                    id: _getNextId(),
+                    name: _nameController.text,
+                  );
+                  Hive.box('ExamBox').add(value);
+                  Navigator.pop(context);
+                },
                 child: Text('Aggiungi esame'),
               ),
             ],
