@@ -10,5 +10,15 @@ class Exam {
   @HiveField(1)
   final String name;
 
-  Exam({required this.id, required this.name});
+  @HiveField(2)
+  final int cfu;
+
+  @HiveField(3)
+  final bool status;
+
+  Exam(
+      {required this.id,
+      required this.name,
+      required this.cfu,
+      required this.status});
 }

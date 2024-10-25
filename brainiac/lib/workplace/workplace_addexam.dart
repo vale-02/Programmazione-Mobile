@@ -1,6 +1,6 @@
 import 'package:brainiac/model/exam.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 
 class WorkplaceAddexam extends StatefulWidget {
@@ -12,10 +12,12 @@ class WorkplaceAddexam extends StatefulWidget {
 
 class _WorkplaceAddexam extends State<WorkplaceAddexam> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _cfuController = TextEditingController();
 
   @override
   void dispose() {
     _nameController.dispose();
+    _cfuController.dispose();
     super.dispose();
   }
 
@@ -43,11 +45,24 @@ class _WorkplaceAddexam extends State<WorkplaceAddexam> {
               SizedBox(
                 height: 20,
               ),
+              TextField(
+                controller: _cfuController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: InputDecoration(labelText: 'CFU'),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () {
                   final value = Exam(
                     id: _getNextId(),
                     name: _nameController.text,
+                    cfu: int.parse(_cfuController.text),
+                    status: false,
                   );
                   Hive.box('ExamBox').add(value);
                   Navigator.pop(context);

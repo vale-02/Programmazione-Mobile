@@ -2,12 +2,10 @@ import 'package:brainiac/model/exam.dart';
 import 'package:brainiac/workplace/workplace_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 
 void main() async {
   //Inizializzazione database Hive
   WidgetsFlutterBinding.ensureInitialized();
-
   await Hive.initFlutter();
   Hive.registerAdapter(ExamAdapter());
 

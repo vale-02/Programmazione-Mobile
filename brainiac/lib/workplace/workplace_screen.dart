@@ -1,8 +1,7 @@
-import 'package:brainiac/main.dart';
 import 'package:brainiac/model/exam.dart';
 import 'package:brainiac/workplace/workplace_addexam.dart';
+import 'package:brainiac/workplace/workplace_editexam.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class WorkplaceScreen extends StatelessWidget {
@@ -37,7 +36,26 @@ class WorkplaceScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final helper = hiveBox.getAt(index) as Exam;
                     return ListTile(
+                      leading: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => WorkplaceEditexam(
+                                id: helper.id,
+                                name: helper.name,
+                                cfu: helper.cfu,
+                                status: helper.status,
+                              ),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.edit),
+                      ),
                       title: Text(helper.name),
+                      subtitle: Text(helper.cfu.toString()),
+                      trailing: Icon(helper.status
+                          ? Icons.check_circle_outlined
+                          : Icons.pending_outlined),
                     );
                   },
                 );

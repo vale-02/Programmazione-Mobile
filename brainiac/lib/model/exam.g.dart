@@ -19,17 +19,23 @@ class ExamAdapter extends TypeAdapter<Exam> {
     return Exam(
       id: fields[0] as int,
       name: fields[1] as String,
+      cfu: fields[2] as int,
+      status: fields[3] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Exam obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.cfu)
+      ..writeByte(3)
+      ..write(obj.status);
   }
 
   @override
