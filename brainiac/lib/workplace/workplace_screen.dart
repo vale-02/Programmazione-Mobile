@@ -53,6 +53,8 @@ class WorkplaceScreen extends StatelessWidget {
                                 name: helper.name,
                                 cfu: helper.cfu,
                                 status: helper.status,
+                                grade: helper.grade,
+                                description: helper.description,
                               ),
                             ),
                           );

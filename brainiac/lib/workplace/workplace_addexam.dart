@@ -2,6 +2,8 @@ import 'package:brainiac/model/exam.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class WorkplaceAddexam extends StatefulWidget {
   const WorkplaceAddexam({super.key});
@@ -13,11 +15,13 @@ class WorkplaceAddexam extends StatefulWidget {
 class _WorkplaceAddexam extends State<WorkplaceAddexam> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _cfuController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void dispose() {
     _nameController.dispose();
     _cfuController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -56,6 +60,33 @@ class _WorkplaceAddexam extends State<WorkplaceAddexam> {
               SizedBox(
                 height: 20,
               ),
+              Column(
+                children: [
+                  TextField(
+                    controller: _descriptionController,
+                    decoration: InputDecoration(labelText: 'Descrizione esame'),
+                    maxLines: null,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      final model = GenerativeModel(
+                        model: 'gemini-1.5-flash',
+                        apiKey: dotenv.env['API_AI'] ?? 'API key non trovata',
+                      );
+                      final prompt =
+                          'Dammi una breve descrizione degli obiettivi e dei contenuti dell\'esame universitario di ${_nameController.text} da ${_cfuController.text} CFU';
+
+                      final response =
+                          await model.generateContent([Content.text(prompt)]);
+                      _descriptionController.text = response.text!;
+                    },
+                    child: Text('Genera con l\'AI'),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () {
                   final value = Exam(
@@ -63,6 +94,8 @@ class _WorkplaceAddexam extends State<WorkplaceAddexam> {
                     name: _nameController.text,
                     cfu: int.parse(_cfuController.text),
                     status: false,
+                    grade: 0,
+                    description: _descriptionController.text,
                   );
                   Hive.box('ExamBox').add(value);
                   Navigator.pop(context);

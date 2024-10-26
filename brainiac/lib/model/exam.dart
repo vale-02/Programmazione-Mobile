@@ -16,9 +16,17 @@ class Exam {
   @HiveField(3)
   final bool status;
 
+  @HiveField(4)
+  final int grade;
+
+  @HiveField(5)
+  final String description;
+
   Exam(
       {required this.id,
       required this.name,
       required this.cfu,
-      required this.status});
+      required this.status,
+      required this.grade,
+      required this.description});
 }

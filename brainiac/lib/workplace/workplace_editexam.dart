@@ -9,11 +9,15 @@ class WorkplaceEditexam extends StatefulWidget {
       required this.id,
       required this.name,
       required this.cfu,
-      required this.status});
+      required this.status,
+      required this.grade,
+      required this.description});
   final int id;
   final String name;
   final int cfu;
   final bool status;
+  final int grade;
+  final String description;
 
   @override
   State<WorkplaceEditexam> createState() => _WorkplaceEditexam();
@@ -23,12 +27,18 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _cfuController = TextEditingController();
   late bool _statusController;
+  final TextEditingController _gradeController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
     _nameController.text = widget.name;
     _cfuController.text = widget.cfu.toString();
     _statusController = widget.status;
+    widget.grade == 0
+        ? _gradeController.text = ''
+        : _gradeController.text = widget.grade.toString();
+    _descriptionController.text = widget.description;
 
     super.initState();
   }
@@ -37,6 +47,8 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
   void dispose() {
     _nameController.dispose();
     _cfuController.dispose();
+    _gradeController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -74,6 +86,19 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
               SizedBox(
                 height: 20,
               ),
+              SingleChildScrollView(
+                child: TextField(
+                  controller: _descriptionController,
+                  decoration: InputDecoration(
+                    labelText: 'Descrizione esame',
+                    hintText: widget.description,
+                  ),
+                  maxLines: null,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               DropdownButton<bool>(
                 value: _statusController,
                 onChanged: (bool? newValue) {
@@ -95,6 +120,18 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
               SizedBox(
                 height: 20,
               ),
+              TextField(
+                controller: _gradeController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: InputDecoration(
+                    labelText: 'Voto', hintText: widget.grade.toString()),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () {
                   final value = Exam(
@@ -102,6 +139,8 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
                     name: _nameController.text,
                     cfu: int.parse(_cfuController.text),
                     status: _statusController,
+                    grade: int.parse(_gradeController.text),
+                    description: _descriptionController.text,
                   );
                   Hive.box('ExamBox').putAt(widget.id, value);
                   Navigator.pop(context);
