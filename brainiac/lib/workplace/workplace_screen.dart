@@ -12,6 +12,14 @@ class WorkplaceScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('WORKPLACE'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Hive.box('ExamBox').clear();
+            },
+            icon: Icon(Icons.delete_forever_rounded),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -53,9 +61,43 @@ class WorkplaceScreen extends StatelessWidget {
                       ),
                       title: Text(helper.name),
                       subtitle: Text(helper.cfu.toString()),
-                      trailing: Icon(helper.status
-                          ? Icons.check_circle_outlined
-                          : Icons.pending_outlined),
+                      trailing: Column(
+                        children: [
+                          Icon(helper.status
+                              ? Icons.check_circle_outlined
+                              : Icons.pending_outlined),
+                          IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                useSafeArea: true,
+                                builder: (context) => AlertDialog(
+                                  scrollable: true,
+                                  title: Text('Elimina esame'),
+                                  content: Text(
+                                      'Vuoi eliminare definitivamente questo esame?'),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        hiveBox.deleteAt(index);
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Elimina'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Annulla'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.delete),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 );
