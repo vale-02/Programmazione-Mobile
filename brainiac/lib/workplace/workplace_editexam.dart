@@ -143,7 +143,13 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
                     description: _descriptionController.text,
                   );
                   Hive.box('ExamBox').putAt(widget.id, value);
-                  Navigator.pop(context);
+                  Navigator.pop(context, {
+                    'name': _nameController.text,
+                    'cfu': int.parse(_cfuController.text),
+                    'status': _statusController,
+                    'grade': int.parse(_gradeController.text),
+                    'description': _descriptionController.text,
+                  });
                 },
                 child: Text('Modifica esame'),
               ),

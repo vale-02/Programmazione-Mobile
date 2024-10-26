@@ -1,6 +1,6 @@
 import 'package:brainiac/model/exam.dart';
 import 'package:brainiac/workplace/workplace_addexam.dart';
-import 'package:brainiac/workplace/workplace_editexam.dart';
+import 'package:brainiac/workplace/workplace_viewexam.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -43,62 +43,57 @@ class WorkplaceScreen extends StatelessWidget {
                   itemCount: hiveBox.length,
                   itemBuilder: (context, index) {
                     final helper = hiveBox.getAt(index) as Exam;
-                    return ListTile(
-                      leading: IconButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => WorkplaceEditexam(
-                                id: helper.id,
-                                name: helper.name,
-                                cfu: helper.cfu,
-                                status: helper.status,
-                                grade: helper.grade,
-                                description: helper.description,
-                              ),
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => WorkplaceViewexam(
+                              id: helper.id,
+                              name: helper.name,
+                              cfu: helper.cfu,
+                              status: helper.status,
+                              grade: helper.grade,
+                              description: helper.description,
                             ),
-                          );
-                        },
-                        icon: Icon(Icons.edit),
-                      ),
-                      title: Text(helper.name),
-                      subtitle: Text(helper.cfu.toString()),
-                      trailing: Column(
-                        children: [
-                          Icon(helper.status
-                              ? Icons.check_circle_outlined
-                              : Icons.pending_outlined),
-                          IconButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                useSafeArea: true,
-                                builder: (context) => AlertDialog(
-                                  scrollable: true,
-                                  title: Text('Elimina esame'),
-                                  content: Text(
-                                      'Vuoi eliminare definitivamente questo esame?'),
-                                  actions: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        hiveBox.deleteAt(index);
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('Elimina'),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('Annulla'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                            icon: Icon(Icons.delete),
                           ),
-                        ],
+                        );
+                      },
+                      child: ListTile(
+                        leading: IconButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              useSafeArea: true,
+                              builder: (context) => AlertDialog(
+                                scrollable: true,
+                                title: Text('Elimina esame'),
+                                content: Text(
+                                    'Vuoi eliminare definitivamente questo esame?'),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      hiveBox.deleteAt(index);
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Elimina'),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Annulla'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.delete),
+                        ),
+                        title: Text(helper.name),
+                        subtitle: Text(helper.cfu.toString()),
+                        trailing: Icon(helper.status
+                            ? Icons.check_circle_outlined
+                            : Icons.pending_outlined),
                       ),
                     );
                   },
