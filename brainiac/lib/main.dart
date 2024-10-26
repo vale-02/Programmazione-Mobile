@@ -1,4 +1,5 @@
 import 'package:brainiac/model/exam.dart';
+import 'package:brainiac/model/year.dart';
 import 'package:brainiac/workplace/workplace_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -9,6 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(ExamAdapter());
+  Hive.registerAdapter(YearAdapter());
 
   //Inizializzazione file .env
   await dotenv.load(fileName: ".env");

@@ -40,6 +40,7 @@ dependencies:
   google_generative_ai: ^0.4.6
   dotenv: ^4.2.0
   flutter_dotenv: ^5.2.1
+  hive_generator: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -51,7 +52,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
-  hive_generator: ^2.0.1
   build_runner: ^2.4.13
 
 # For information on the generic Dart part of this file, see the
