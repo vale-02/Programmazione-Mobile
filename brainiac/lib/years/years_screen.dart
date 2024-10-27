@@ -2,8 +2,10 @@ import 'package:brainiac/model/year.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+// ignore: must_be_immutable
 class YearsScreen extends StatefulWidget {
-  const YearsScreen({super.key});
+  YearsScreen({super.key, required this.onYearSelected});
+  Function(int) onYearSelected;
 
   @override
   State<YearsScreen> createState() => _YearsScreen();
@@ -59,11 +61,18 @@ class _YearsScreen extends State<YearsScreen> {
                             actions: [
                               ElevatedButton(
                                 onPressed: () {
-                                  int indexToDelete = years
-                                      .indexWhere((y) => y.year == year.year);
-                                  print(indexToDelete);
-                                  print(year.year);
-                                  hiveBox.deleteAt(indexToDelete);
+                                  int index = -1;
+                                  for (int i = 0; i < hiveBox.length; i++) {
+                                    Year storedYear = hiveBox.getAt(i) as Year;
+                                    if (storedYear.year == year.year) {
+                                      index = i;
+                                      break;
+                                    }
+                                  }
+                                  if (index != -1) {
+                                    hiveBox.deleteAt(index);
+                                  }
+                                  widget.onYearSelected(-1);
                                   Navigator.pop(context);
                                 },
                                 child: Text('Elimina'),
@@ -79,7 +88,7 @@ class _YearsScreen extends State<YearsScreen> {
                         );
                       },
                       onPressed: () {
-                        print('Anno selezionato: ${year.year}');
+                        widget.onYearSelected(year.year);
                       },
                       child: Text('Anno ${year.year}'),
                     ),

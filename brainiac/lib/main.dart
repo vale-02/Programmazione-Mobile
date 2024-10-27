@@ -1,9 +1,11 @@
 import 'package:brainiac/model/exam.dart';
 import 'package:brainiac/model/year.dart';
 import 'package:brainiac/workplace/workplace_screen.dart';
+import 'package:brainiac/years/year_selectionmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   //Inizializzazione database Hive
@@ -15,7 +17,12 @@ void main() async {
   //Inizializzazione file .env
   await dotenv.load(fileName: ".env");
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => YearSelectionModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: const WorkplaceScreen(),
+      home: WorkplaceScreen(),
     );
   }
 }

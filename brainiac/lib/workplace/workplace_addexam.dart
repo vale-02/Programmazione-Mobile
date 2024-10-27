@@ -1,4 +1,5 @@
 import 'package:brainiac/model/exam.dart';
+import 'package:brainiac/model/year.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -6,7 +7,8 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class WorkplaceAddexam extends StatefulWidget {
-  const WorkplaceAddexam({super.key});
+  const WorkplaceAddexam({super.key, required this.selectedYear});
+  final int selectedYear;
 
   @override
   State<WorkplaceAddexam> createState() => _WorkplaceAddexam();
@@ -96,6 +98,26 @@ class _WorkplaceAddexam extends State<WorkplaceAddexam> {
                     status: false,
                     grade: 0,
                     description: _descriptionController.text,
+                  );
+
+                  int index = -1;
+
+                  for (int i = 0; i < Hive.box('YearBox').length; i++) {
+                    Year storedYear = Hive.box('YearBox').getAt(i) as Year;
+                    if (storedYear.year == widget.selectedYear) {
+                      index = i;
+                      break;
+                    }
+                  }
+
+                  Year existingYear = Hive.box('YearBox').getAt(index) as Year;
+                  List<Exam> updatedExams = List.from(existingYear.exams ?? [])
+                    ..add(value);
+                  final updatedYear =
+                      Year(year: existingYear.year, exams: updatedExams);
+                  Hive.box('YearBox').putAt(index, updatedYear);
+                  print(
+                    Hive.box('YearBox').getAt(index),
                   );
                   Hive.box('ExamBox').add(value);
                   Navigator.pop(context);

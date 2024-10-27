@@ -11,5 +11,5 @@ class Year {
   @HiveField(1)
   final List<Exam>? exams;
 
-  Year({required this.year, required this.exams});
+  Year({required this.year, List<Exam>? exams}) : exams = exams ?? [];
 }
