@@ -8,15 +8,16 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  //Inizializzazione database Hive
+  // Inizializzazione database Hive
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(ExamAdapter());
   Hive.registerAdapter(YearAdapter());
+  Hive.registerAdapter(ExamAdapter());
 
-  //Inizializzazione file .env
+  // Inizializzazione file .env
   await dotenv.load(fileName: ".env");
 
+  // Inizializzazione Provider
   runApp(
     ChangeNotifierProvider(
       create: (context) => YearSelectionModel(),

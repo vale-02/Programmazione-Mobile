@@ -5,12 +5,14 @@ class YearSelectionModel with ChangeNotifier {
 
   int get selectedYear => _selectedYear;
 
+  //Provider per la selezione dell'anno su cui lavorare
   void selectYear(int year) {
     _selectedYear = year;
     notifyListeners();
   }
 
-  void resetSelectedYear() {
+  //Provider per la deselezione dell'anno
+  void resetYear() {
     _selectedYear = -1;
     notifyListeners();
   }

@@ -2,25 +2,25 @@ import 'package:hive/hive.dart';
 
 part 'exam.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class Exam {
   @HiveField(0)
   final int id;
 
   @HiveField(1)
-  final String name;
+  String name;
 
   @HiveField(2)
-  final int cfu;
+  int cfu;
 
   @HiveField(3)
-  final bool status;
+  bool status;
 
   @HiveField(4)
-  final int grade;
+  int grade;
 
   @HiveField(5)
-  final String description;
+  String description;
 
   Exam(
       {required this.id,

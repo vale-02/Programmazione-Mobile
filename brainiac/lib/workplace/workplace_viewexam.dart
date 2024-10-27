@@ -1,5 +1,7 @@
-import 'package:brainiac/workplace/workplace_editexam.dart';
+import 'package:brainiac/model/exam.dart';
+import 'package:brainiac/widget/heading_viewexam.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 // ignore: must_be_immutable
 class WorkplaceViewexam extends StatefulWidget {
@@ -10,7 +12,11 @@ class WorkplaceViewexam extends StatefulWidget {
       required this.cfu,
       required this.status,
       required this.grade,
-      required this.description});
+      required this.description,
+      required this.selectedYear,
+      required this.yearBox});
+  Box yearBox;
+  final int selectedYear;
   final int id;
   String name;
   int cfu;
@@ -22,58 +28,27 @@ class WorkplaceViewexam extends StatefulWidget {
   State<WorkplaceViewexam> createState() => _WorkplaceViewexam();
 }
 
+// Pagina di visualizzazione dell'esame selezionato con il GestureDetector in ListExam
+// ** da aggiungere le miniature video e libri prese con API **
 class _WorkplaceViewexam extends State<WorkplaceViewexam> {
-  String _getStatus() {
-    return widget.status ? 'Superato' : 'In corso';
-  }
-
-  String _getGrade() {
-    return widget.grade == 0 ? '' : widget.grade.toString();
-  }
-
   @override
   Widget build(BuildContext context) {
+    Exam exam = Exam(
+        id: widget.id,
+        name: widget.name,
+        cfu: widget.cfu,
+        status: widget.status,
+        grade: widget.grade,
+        description: widget.description);
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () async {
-                      final updatedValues = await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => WorkplaceEditexam(
-                            id: widget.id,
-                            name: widget.name,
-                            cfu: widget.cfu,
-                            status: widget.status,
-                            grade: widget.grade,
-                            description: widget.description,
-                          ),
-                        ),
-                      );
-
-                      setState(() {
-                        widget.name = updatedValues['name'];
-                        widget.cfu = updatedValues['cfu'];
-                        widget.status = updatedValues['status'];
-                        widget.grade = updatedValues['grade'];
-                        widget.description = updatedValues['description'];
-                      });
-                    },
-                    icon: Icon(Icons.edit)),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(widget.name),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(_getGrade()),
-              ],
-            ),
+            HeadingViewexam(
+                exam: exam,
+                year: widget.yearBox,
+                selectedYear: widget.selectedYear),
             SizedBox(
               height: 20,
             ),
@@ -94,7 +69,7 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
               height: 10,
             ),
             SizedBox(
-              height: 200, // Altezza fissa per la descrizione
+              height: 200,
               child: SingleChildScrollView(
                 child: Text(
                   widget.description,
@@ -105,5 +80,9 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
         ),
       ),
     );
+  }
+
+  String _getStatus() {
+    return widget.status ? 'Superato' : 'In corso';
   }
 }

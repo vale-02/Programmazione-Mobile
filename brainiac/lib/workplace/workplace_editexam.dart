@@ -1,23 +1,29 @@
 import 'package:brainiac/model/exam.dart';
+import 'package:brainiac/model/year.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 
+// ignore: must_be_immutable
 class WorkplaceEditexam extends StatefulWidget {
-  const WorkplaceEditexam(
+  WorkplaceEditexam(
       {super.key,
       required this.id,
       required this.name,
       required this.cfu,
       required this.status,
       required this.grade,
-      required this.description});
+      required this.description,
+      required this.year,
+      required this.yearBox});
+  final int year;
   final int id;
   final String name;
   final int cfu;
   final bool status;
   final int grade;
   final String description;
+  Box yearBox;
 
   @override
   State<WorkplaceEditexam> createState() => _WorkplaceEditexam();
@@ -26,19 +32,19 @@ class WorkplaceEditexam extends StatefulWidget {
 class _WorkplaceEditexam extends State<WorkplaceEditexam> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _cfuController = TextEditingController();
-  late bool _statusController;
   final TextEditingController _gradeController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  late bool _statusController;
 
   @override
   void initState() {
     _nameController.text = widget.name;
     _cfuController.text = widget.cfu.toString();
     _statusController = widget.status;
+    _descriptionController.text = widget.description;
     widget.grade == 0
         ? _gradeController.text = ''
         : _gradeController.text = widget.grade.toString();
-    _descriptionController.text = widget.description;
 
     super.initState();
   }
@@ -134,22 +140,7 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  final value = Exam(
-                    id: widget.id,
-                    name: _nameController.text,
-                    cfu: int.parse(_cfuController.text),
-                    status: _statusController,
-                    grade: int.parse(_gradeController.text),
-                    description: _descriptionController.text,
-                  );
-                  Hive.box('ExamBox').putAt(widget.id, value);
-                  Navigator.pop(context, {
-                    'name': _nameController.text,
-                    'cfu': int.parse(_cfuController.text),
-                    'status': _statusController,
-                    'grade': int.parse(_gradeController.text),
-                    'description': _descriptionController.text,
-                  });
+                  _updateExamDB();
                 },
                 child: Text('Modifica esame'),
               ),
@@ -158,5 +149,43 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
         ),
       ),
     );
+  }
+
+  void _updateExamDB() {
+    int selectedIndex = -1;
+
+    Year? selectedYearData;
+
+    for (int i = 0; i < widget.yearBox.length; i++) {
+      final yearData = widget.yearBox.getAt(i) as Year;
+      if (yearData.year == widget.year) {
+        selectedYearData = yearData;
+        selectedIndex = i;
+        break;
+      }
+    }
+
+    final value = Exam(
+      id: widget.id,
+      name: _nameController.text,
+      cfu: int.parse(_cfuController.text),
+      status: _statusController,
+      grade: int.parse(_gradeController.text),
+      description: _descriptionController.text,
+    );
+
+    final int examId =
+        selectedYearData!.exams!.indexWhere((exam) => exam.id == widget.id);
+    selectedYearData.exams![examId] = value;
+
+    widget.yearBox.putAt(selectedIndex, selectedYearData);
+
+    Navigator.pop(context, {
+      'name': _nameController.text,
+      'cfu': int.parse(_cfuController.text),
+      'status': _statusController,
+      'grade': int.parse(_gradeController.text),
+      'description': _descriptionController.text,
+    });
   }
 }
