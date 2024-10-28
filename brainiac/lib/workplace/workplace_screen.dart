@@ -1,7 +1,7 @@
 import 'package:brainiac/model/year.dart';
-import 'package:brainiac/widget/delete_db.dart';
-import 'package:brainiac/widget/floatingactionbutton_workplace.dart';
-import 'package:brainiac/widget/list_exam.dart';
+import 'package:brainiac/workplace/widget/delete_db.dart';
+import 'package:brainiac/workplace/widget/floatingactionbutton_workplace.dart';
+import 'package:brainiac/workplace/widget/list_exam.dart';
 import 'package:brainiac/years/year_selectionmodel.dart';
 import 'package:brainiac/years/years_screen.dart';
 import 'package:flutter/material.dart';

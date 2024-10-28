@@ -1,7 +1,7 @@
 import 'package:brainiac/model/exam.dart';
 import 'package:brainiac/model/year.dart';
+import 'package:brainiac/workplace/form/exam_edit_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 
 // ignore: must_be_immutable
@@ -35,6 +35,7 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
   final TextEditingController _gradeController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   late bool _statusController;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -58,6 +59,13 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
     super.dispose();
   }
 
+  /*
+      Schermata per la modifica dell'esame selezionato
+      Visualizzazione di tutti i campi
+      Controllo correttezza nuovi dati
+      Aggiunta modifiche al DB
+  */
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,91 +75,58 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: 'Nome esame',
-                  hintText: widget.name,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ExamEditForm(
+                    nameController: _nameController,
+                    cfuController: _cfuController,
+                    gradeController: _gradeController,
+                    descriptionController: _descriptionController,
+                    status: _statusController,
+                    onStatusChanged: (newValue) {
+                      setState(() {
+                        if (newValue == false && _statusController == true) {
+                          _gradeController.clear();
+                          _gradeController.text = '0';
+                        }
+                        _statusController = newValue!;
+                      });
+                    }),
+                ElevatedButton(
+                  onPressed: () {
+                    _submit();
+                  },
+                  child: Text('Modifica esame'),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: _cfuController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: InputDecoration(
-                    labelText: 'CFU', hintText: widget.cfu.toString()),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SingleChildScrollView(
-                child: TextField(
-                  controller: _descriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Descrizione esame',
-                    hintText: widget.description,
-                  ),
-                  maxLines: null,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              DropdownButton<bool>(
-                value: _statusController,
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    _statusController = newValue!;
-                  });
-                },
-                items: [
-                  DropdownMenuItem(
-                    value: true,
-                    child: Text('Superato'),
-                  ),
-                  DropdownMenuItem(
-                    value: false,
-                    child: Text('In corso'),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: _gradeController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: InputDecoration(
-                    labelText: 'Voto', hintText: widget.grade.toString()),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  _updateExamDB();
-                },
-                child: Text('Modifica esame'),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  void _updateExamDB() {
+  //Controllo validità del form
+  void _submit() {
+    if (_formKey.currentState!.validate()) {
+      _editExamToDatabase();
+      Navigator.pop(context, {
+        'name': _nameController.text,
+        'cfu': int.parse(_cfuController.text),
+        'status': _statusController,
+        'grade': _gradeController.text.isEmpty
+            ? 0
+            : int.parse(_gradeController.text),
+        'description': _descriptionController.text,
+      });
+    }
+  }
+
+  // Aggiornamento del DB con i nuovi dati
+  void _editExamToDatabase() {
     int selectedIndex = -1;
 
     Year? selectedYearData;
@@ -170,7 +145,8 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
       name: _nameController.text,
       cfu: int.parse(_cfuController.text),
       status: _statusController,
-      grade: int.parse(_gradeController.text),
+      grade:
+          _gradeController.text.isEmpty ? 0 : int.parse(_gradeController.text),
       description: _descriptionController.text,
     );
 
@@ -179,13 +155,5 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
     selectedYearData.exams![examId] = value;
 
     widget.yearBox.putAt(selectedIndex, selectedYearData);
-
-    Navigator.pop(context, {
-      'name': _nameController.text,
-      'cfu': int.parse(_cfuController.text),
-      'status': _statusController,
-      'grade': int.parse(_gradeController.text),
-      'description': _descriptionController.text,
-    });
   }
 }

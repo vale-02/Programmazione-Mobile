@@ -1,5 +1,4 @@
-import 'package:brainiac/model/exam.dart';
-import 'package:brainiac/widget/heading_viewexam.dart';
+import 'package:brainiac/workplace/workplace_editexam.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -33,22 +32,28 @@ class WorkplaceViewexam extends StatefulWidget {
 class _WorkplaceViewexam extends State<WorkplaceViewexam> {
   @override
   Widget build(BuildContext context) {
-    Exam exam = Exam(
-        id: widget.id,
-        name: widget.name,
-        cfu: widget.cfu,
-        status: widget.status,
-        grade: widget.grade,
-        description: widget.description);
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HeadingViewexam(
-                exam: exam,
-                year: widget.yearBox,
-                selectedYear: widget.selectedYear),
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      _editExamScreen(context);
+                    },
+                    icon: Icon(Icons.edit)),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(widget.name),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(_getGrade()),
+              ],
+            ),
             SizedBox(
               height: 20,
             ),
@@ -63,10 +68,6 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
             ),
             SizedBox(
               height: 20,
-            ),
-            Text('Descrizione :'),
-            SizedBox(
-              height: 10,
             ),
             SizedBox(
               height: 200,
@@ -84,5 +85,37 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
 
   String _getStatus() {
     return widget.status ? 'Superato' : 'In corso';
+  }
+
+  String _getGrade() {
+    return widget.grade == 0 ? '' : widget.grade.toString();
+  }
+
+  // Funzione per la modifica dell'esame che si sta vedendo e aggiornamento dei dati relativi ad esso
+  void _editExamScreen(BuildContext context) async {
+    final updatedValues = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => WorkplaceEditexam(
+          yearBox: widget.yearBox,
+          year: widget.selectedYear,
+          id: widget.id,
+          name: widget.name,
+          cfu: widget.cfu,
+          status: widget.status,
+          grade: widget.grade,
+          description: widget.description,
+        ),
+      ),
+    );
+
+    if (updatedValues != null) {
+      setState(() {
+        widget.name = updatedValues['name'] ?? widget.name;
+        widget.cfu = updatedValues['cfu'] ?? widget.cfu;
+        widget.status = updatedValues['status'] ?? widget.status;
+        widget.grade = updatedValues['grade'] ?? widget.grade;
+        widget.description = updatedValues['description'] ?? widget.description;
+      });
+    }
   }
 }
