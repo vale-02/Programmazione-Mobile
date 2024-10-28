@@ -30,6 +30,7 @@ class WorkplaceScreen extends StatelessWidget {
         future: Future.wait([
           Hive.openBox('ExamBox'),
           Hive.openBox('YearBox'),
+          Hive.openBox('VideoBox'),
         ]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {

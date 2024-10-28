@@ -1,4 +1,5 @@
 import 'package:brainiac/workplace/workplace_editexam.dart';
+import 'package:brainiac/youtube/youtube_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -76,6 +77,21 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
                   widget.description,
                 ),
               ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                print(widget.name);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => YoutubeScreen(
+                        searchName: widget.name, searchCfu: widget.cfu),
+                  ),
+                );
+              },
+              child: Text('Genera video'),
             ),
           ],
         ),

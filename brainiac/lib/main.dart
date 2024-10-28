@@ -1,4 +1,5 @@
 import 'package:brainiac/model/exam.dart';
+import 'package:brainiac/model/video.dart';
 import 'package:brainiac/model/year.dart';
 import 'package:brainiac/workplace/workplace_screen.dart';
 import 'package:brainiac/years/year_selectionmodel.dart';
@@ -13,6 +14,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(YearAdapter());
   Hive.registerAdapter(ExamAdapter());
+  Hive.registerAdapter(VideoAdapter());
 
   // Inizializzazione file .env
   await dotenv.load(fileName: ".env");
