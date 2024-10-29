@@ -32,6 +32,7 @@ class WorkplaceScreen extends StatelessWidget {
           Hive.openBox('YearBox'),
           Hive.openBox('VideoBox'),
           Hive.openBox('PlaylistBox'),
+          Hive.openBox('BookBox'),
         ]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {

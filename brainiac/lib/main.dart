@@ -1,3 +1,4 @@
+import 'package:brainiac/model/book.dart';
 import 'package:brainiac/model/exam.dart';
 import 'package:brainiac/model/playlist.dart';
 import 'package:brainiac/model/video.dart';
@@ -17,6 +18,7 @@ void main() async {
   Hive.registerAdapter(ExamAdapter());
   Hive.registerAdapter(VideoAdapter());
   Hive.registerAdapter(PlaylistAdapter());
+  Hive.registerAdapter(BookAdapter());
 
   // Inizializzazione file .env
   await dotenv.load(fileName: ".env");
