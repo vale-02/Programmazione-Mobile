@@ -83,11 +83,10 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
             ),
             ElevatedButton(
               onPressed: () {
-                print(widget.name);
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => YoutubeScreen(
-                        searchName: widget.name, searchCfu: widget.cfu),
+                    builder: (context) =>
+                        YoutubeScreen(searchName: widget.name),
                   ),
                 );
               },

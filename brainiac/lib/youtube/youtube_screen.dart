@@ -1,20 +1,21 @@
+import 'package:brainiac/model/playlist.dart';
 import 'package:brainiac/model/video.dart';
 import 'package:brainiac/youtube/api_service.dart';
+import 'package:brainiac/youtube/playlist_screen.dart';
 import 'package:brainiac/youtube/video_screen.dart';
 import 'package:flutter/material.dart';
 
 class YoutubeScreen extends StatefulWidget {
-  const YoutubeScreen(
-      {super.key, required this.searchName, required this.searchCfu});
+  const YoutubeScreen({super.key, required this.searchName});
   final String searchName;
-  final int searchCfu;
 
   @override
   State<YoutubeScreen> createState() => _YoutubeScreen();
 }
 
 class _YoutubeScreen extends State<YoutubeScreen> {
-  List<Video> _video = [];
+  List<dynamic> _result = [];
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -26,21 +27,37 @@ class _YoutubeScreen extends State<YoutubeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: ListView.builder(
-        itemCount: _video.length,
-        itemBuilder: (context, index) {
-          Video video = _video[index];
-          return _buildVideo(video);
-        },
-      ),
+      body: _result.isNotEmpty
+          ? NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scroll) {
+                if (!_isLoading &&
+                    scroll.metrics.pixels == scroll.metrics.maxScrollExtent) {
+                  _loadMoreVideo();
+                }
+                return false;
+              },
+              child: ListView.builder(
+                itemCount: _result.length,
+                itemBuilder: (context, index) {
+                  if (_result[index] is Video) {
+                    return _buildVideo(_result[index]);
+                  } else {
+                    return _builPlaylist(_result[index]);
+                  }
+                },
+              ),
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 
   void _initVideo() async {
-    List<Video> video = await APIService.instance
-        .fetchVideoFromSearch(widget.searchName, widget.searchCfu);
+    List<dynamic> result =
+        await APIService.instance.fetchVideoFromSearch(widget.searchName);
     setState(() {
-      _video = video;
+      _result = result;
     });
   }
 
@@ -59,18 +76,27 @@ class _YoutubeScreen extends State<YoutubeScreen> {
         padding: EdgeInsets.all(10.0),
         child: Row(
           children: [
-            Image.network(
-              video.thumbnailsUrl,
-              width: 150.0,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
+            Stack(
+              children: [
+                Image.network(
+                  video.thumbnailsUrl,
                   width: 150.0,
-                  height: 140.0,
-                  color: Colors.grey, // Colore di sfondo per l'errore
-                  child: Icon(Icons.error), // Icona di errore
-                );
-              },
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 150.0,
+                      height: 140.0,
+                      color: Colors.grey, // Colore di sfondo per l'errore
+                      child: Icon(Icons.error), // Icona di errore
+                    );
+                  },
+                ),
+                Positioned(
+                  top: 10,
+                  left: 10,
+                  child: Icon(Icons.play_arrow),
+                ),
+              ],
             ),
             SizedBox(
               width: 10.0,
@@ -78,6 +104,68 @@ class _YoutubeScreen extends State<YoutubeScreen> {
             Expanded(
               child: Text(
                 video.title,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _loadMoreVideo() async {
+    _isLoading = true;
+    List<dynamic> result = await APIService.instance
+        .fetchVideoFromSearch(widget.searchName, loadMore: true);
+    setState(() {
+      _result.addAll(result);
+    });
+
+    _isLoading = false;
+  }
+
+  Widget _builPlaylist(Playlist playlist) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => PlaylistScreen(id: playlist.id),
+          ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+        padding: EdgeInsets.all(10.0),
+        child: Row(
+          children: [
+            Stack(
+              children: [
+                Image.network(
+                  playlist.thumbnailsUrl,
+                  width: 150.0,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 150.0,
+                      height: 140.0,
+                      color: Colors.grey, // Colore di sfondo per l'errore
+                      child: Icon(Icons.error), // Icona di errore
+                    );
+                  },
+                ),
+                Positioned(
+                  top: 10,
+                  left: 10,
+                  child: Icon(Icons.playlist_play_outlined),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Expanded(
+              child: Text(
+                playlist.title,
               ),
             ),
           ],
@@ -86,116 +174,3 @@ class _YoutubeScreen extends State<YoutubeScreen> {
     );
   }
 }
-
-
-
-/*class _YoutubeScreen extends State<YoutubeScreen> {
-  late Channel _channel;
-  bool _isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _initChannel();
-  }
-
-  void _loadMoreVideos() async {
-    _isLoading = true;
-    List<Video> moreVideos = await APIService.instance
-        .fetchVideoFromPlaylist(playlistId: _channel.uploadPlaylistId);
-    _channel.videos?.addAll(moreVideos);
-    List<Video> allVideos = _channel.videos!;
-    setState(() {
-      _channel.videos = allVideos;
-    });
-    _isLoading = false;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Video'),
-        ),
-        // ignore: unnecessary_null_comparison
-        body: _channel != null
-            ? NotificationListener<ScrollNotification>(
-                onNotification: (ScrollNotification scrollDetails) {
-                  if (!_isLoading &&
-                      _channel.videos!.length !=
-                          int.parse(_channel.videoCount) &&
-                      scrollDetails.metrics.pixels ==
-                          scrollDetails.metrics.maxScrollExtent) {
-                    _loadMoreVideos();
-                  }
-                  return false;
-                },
-                child: ListView.builder(
-                  itemCount: 1 + _channel.videos!.length,
-                  itemBuilder: (context, index) {
-                    Video video = _channel.videos![index - 1];
-                    return _buildVideo(video);
-                  },
-                ),
-              )
-            : Center(
-                child: CircularProgressIndicator(),
-              ));
-  }
-
-  void _initChannel() async {
-    Channel channel =
-        await APIService.instance.fetchChannel(channelId: channelId);
-    setState(() {
-      _channel = channel;
-    });
-  }
-
-  _buildVideo(Video video) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => VideoScreen(id: video.id),
-          ),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-        padding: EdgeInsets.all(10.0),
-        height: 140.0,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              offset: Offset(0, 1),
-              blurRadius: 6.0,
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Image(
-              width: 150.0,
-              image: NetworkImage(video.thumbnailUrl),
-            ),
-            SizedBox(
-              width: 10.0,
-            ),
-            Expanded(
-              child: Text(
-                video.title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}*/

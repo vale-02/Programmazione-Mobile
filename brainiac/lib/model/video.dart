@@ -15,20 +15,25 @@ class Video {
   @HiveField(4)
   final String channelTitle;
 
-  Video(
-      {required this.id,
-      required this.title,
-      required this.description,
-      required this.thumbnailsUrl,
-      required this.channelTitle});
+  Video({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.thumbnailsUrl,
+    required this.channelTitle,
+  });
 
   factory Video.fromMap(Map<String, dynamic> map) {
     return Video(
-        id: map['id']['videoId'] as String? ?? 'N/A',
-        title: map['snippet']['title'] as String? ?? 'N/A',
-        description: map['snippet']['description'] as String? ?? 'N/A',
-        thumbnailsUrl:
-            map['snippet']['thumbnails']['default']['url'] as String? ?? 'N/A',
-        channelTitle: map['snippet']['channelTitle'] as String? ?? 'N/A');
+      //id: map['id']['videoId'] as String? ?? 'N/A',
+      id: map['kind'] == 'youtube#playlistItem'
+          ? map['snippet']['resourceId']['videoId'] as String? ?? 'N/A'
+          : map['id']['videoId'] as String? ?? 'N/A',
+      title: map['snippet']['title'] as String? ?? 'N/A',
+      description: map['snippet']['description'] as String? ?? 'N/A',
+      thumbnailsUrl:
+          map['snippet']['thumbnails']['default']['url'] as String? ?? 'N/A',
+      channelTitle: map['snippet']['channelTitle'] as String? ?? 'N/A',
+    );
   }
 }
