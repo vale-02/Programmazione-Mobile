@@ -41,7 +41,7 @@ class APIService {
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      _nextPageToken = data['nextPageToken'] ?? '';
+      _nextPagePlaylist = data['nextPageToken'] ?? '';
       List<dynamic> items = data['items'] ?? [];
       video = items.map((item) {
         return Video.fromMap(item as Map<String, dynamic>);

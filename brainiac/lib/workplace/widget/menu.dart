@@ -1,3 +1,4 @@
+import 'package:brainiac/storage/storage_screen.dart';
 import 'package:brainiac/years/year_selectionmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -42,7 +43,13 @@ class Menu extends StatelessWidget {
         ).then((value) => {
               if (value == 'storage')
                 {
-                  //navigazione pagina di archivio
+                  Navigator.push(
+                    // ignore: use_build_context_synchronously
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => StorageScreen(),
+                    ),
+                  ),
                 }
               else if (value == 'delete')
                 {

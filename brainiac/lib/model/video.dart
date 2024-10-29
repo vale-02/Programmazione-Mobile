@@ -25,7 +25,6 @@ class Video {
 
   factory Video.fromMap(Map<String, dynamic> map) {
     return Video(
-      //id: map['id']['videoId'] as String? ?? 'N/A',
       id: map['kind'] == 'youtube#playlistItem'
           ? map['snippet']['resourceId']['videoId'] as String? ?? 'N/A'
           : map['id']['videoId'] as String? ?? 'N/A',

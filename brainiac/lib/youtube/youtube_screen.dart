@@ -1,8 +1,7 @@
-import 'package:brainiac/model/playlist.dart';
 import 'package:brainiac/model/video.dart';
 import 'package:brainiac/youtube/api_service.dart';
-import 'package:brainiac/youtube/playlist_screen.dart';
-import 'package:brainiac/youtube/video_screen.dart';
+import 'package:brainiac/youtube/widget/playlist_view.dart';
+import 'package:brainiac/youtube/widget/video_view.dart';
 import 'package:flutter/material.dart';
 
 class YoutubeScreen extends StatefulWidget {
@@ -40,9 +39,11 @@ class _YoutubeScreen extends State<YoutubeScreen> {
                 itemCount: _result.length,
                 itemBuilder: (context, index) {
                   if (_result[index] is Video) {
-                    return _buildVideo(_result[index]);
+                    return VideoView(onDelete: () => setState(() {}))
+                        .buildVideo(context, _result[index], add: true);
                   } else {
-                    return _builPlaylist(_result[index]);
+                    return PlaylistView(onDelete: () => setState(() {}))
+                        .builPlaylist(context, _result[index], add: true);
                   }
                 },
               ),
@@ -61,57 +62,6 @@ class _YoutubeScreen extends State<YoutubeScreen> {
     });
   }
 
-  Widget _buildVideo(Video video) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => VideoScreen(id: video.id),
-          ),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-        padding: EdgeInsets.all(10.0),
-        child: Row(
-          children: [
-            Stack(
-              children: [
-                Image.network(
-                  video.thumbnailsUrl,
-                  width: 150.0,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: 150.0,
-                      height: 140.0,
-                      color: Colors.grey, // Colore di sfondo per l'errore
-                      child: Icon(Icons.error), // Icona di errore
-                    );
-                  },
-                ),
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: Icon(Icons.play_arrow),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 10.0,
-            ),
-            Expanded(
-              child: Text(
-                video.title,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   void _loadMoreVideo() async {
     _isLoading = true;
     List<dynamic> result = await APIService.instance
@@ -121,56 +71,5 @@ class _YoutubeScreen extends State<YoutubeScreen> {
     });
 
     _isLoading = false;
-  }
-
-  Widget _builPlaylist(Playlist playlist) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => PlaylistScreen(id: playlist.id),
-          ),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-        padding: EdgeInsets.all(10.0),
-        child: Row(
-          children: [
-            Stack(
-              children: [
-                Image.network(
-                  playlist.thumbnailsUrl,
-                  width: 150.0,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: 150.0,
-                      height: 140.0,
-                      color: Colors.grey, // Colore di sfondo per l'errore
-                      child: Icon(Icons.error), // Icona di errore
-                    );
-                  },
-                ),
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: Icon(Icons.playlist_play_outlined),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 10.0,
-            ),
-            Expanded(
-              child: Text(
-                playlist.title,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

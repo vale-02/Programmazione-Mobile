@@ -91,8 +91,8 @@ class _PlaylistScreen extends State<PlaylistScreen> {
                     return Container(
                       width: 150.0,
                       height: 140.0,
-                      color: Colors.grey, // Colore di sfondo per l'errore
-                      child: Icon(Icons.error), // Icona di errore
+                      color: Colors.grey,
+                      child: Icon(Icons.error),
                     );
                   },
                 ),
