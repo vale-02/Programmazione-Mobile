@@ -6,6 +6,7 @@ import 'package:brainiac/model/video.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
+//Chiamata YouTube API per la fetch dei video e delle playlist da visualizzare in base al nome dell'esame
 class APIService {
   APIService._instatiate();
 
@@ -15,6 +16,7 @@ class APIService {
   String _nextPageToken = '';
   String _nextPagePlaylist = '';
 
+  //Fetch dei video di una playlist
   Future<List<Video>> fetchVideoFromPlaylist(String id,
       {bool loadMore = false}) async {
     if (loadMore && _nextPagePlaylist == '') {
@@ -52,7 +54,7 @@ class APIService {
     }
   }
 
-  Future<List<dynamic>> fetchVideoFromSearch(String searchName,
+  Future<List<dynamic>> fetchVideoPlaylistFromSearch(String searchName,
       {bool loadMore = false}) async {
     if (loadMore && _nextPageToken == '') {
       return [];

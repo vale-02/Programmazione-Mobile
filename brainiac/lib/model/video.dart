@@ -31,7 +31,7 @@ class Video {
       title: map['snippet']['title'] as String? ?? 'N/A',
       description: map['snippet']['description'] as String? ?? 'N/A',
       thumbnailsUrl:
-          map['snippet']['thumbnails']['default']['url'] as String? ?? 'N/A',
+          map['snippet']?['thumbnails']?['default']?['url'] as String? ?? 'N/A',
       channelTitle: map['snippet']['channelTitle'] as String? ?? 'N/A',
     );
   }

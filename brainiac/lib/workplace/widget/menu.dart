@@ -72,6 +72,7 @@ class Menu extends StatelessWidget {
                             Hive.box('ExamBox').clear();
                             Hive.box('VideoBox').clear();
                             Hive.box('PlaylistBox').clear();
+                            Hive.box('BookBox').clear();
 
                             model.resetYear();
                             Navigator.pop(context);

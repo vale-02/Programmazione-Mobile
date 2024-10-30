@@ -1,9 +1,9 @@
-import 'package:brainiac/book/widget/book_view.dart';
+import 'package:brainiac/view/book_view.dart';
 import 'package:brainiac/model/book.dart';
 import 'package:brainiac/model/playlist.dart';
 import 'package:brainiac/model/video.dart';
-import 'package:brainiac/youtube/widget/playlist_view.dart';
-import 'package:brainiac/youtube/widget/video_view.dart';
+import 'package:brainiac/view/playlist_view.dart';
+import 'package:brainiac/view/video_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -15,6 +15,7 @@ class StorageScreen extends StatefulWidget {
   State<StorageScreen> createState() => _StorageScreenState();
 }
 
+//Schermata archivio
 class _StorageScreenState extends State<StorageScreen> {
   String currentCategory = 'video';
 

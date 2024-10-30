@@ -1,4 +1,3 @@
-import 'package:brainiac/book/widget/book_view.dart';
 import 'package:brainiac/model/book.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -37,27 +36,17 @@ class _BookPreview extends State<BookPreview> {
                     ),
                   ),
                   PopupMenuItem(
-                      value: 'buy',
-                      child: Row(
-                        children: [
-                          Text('Acquista libro'),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Icon(Icons.attach_money_sharp),
-                        ],
-                      )),
-                  PopupMenuItem(
-                      value: 'storage',
-                      child: Row(
-                        children: [
-                          Text('Archivia libro'),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Icon(Icons.folder_open_outlined),
-                        ],
-                      )),
+                    value: 'buy',
+                    child: Row(
+                      children: [
+                        Text('Acquista libro'),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Icon(Icons.attach_money_sharp),
+                      ],
+                    ),
+                  ),
                 ],
               ).then(
                 (value) => {
@@ -72,13 +61,7 @@ class _BookPreview extends State<BookPreview> {
                       launchUrl(
                         Uri.parse(widget.book.buyLink),
                       )
-                    },
-                  if (value == 'storage')
-                    {
-                      BookView(
-                        onDelete: () => setState(() {}),
-                      ).addBook(context, widget.book),
-                    },
+                    }
                 },
               );
             },

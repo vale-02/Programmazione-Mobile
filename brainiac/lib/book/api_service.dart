@@ -5,6 +5,7 @@ import 'package:brainiac/model/book.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
+//Chiamata Google Book API per la fetch dei libri da visualizzare in base al nome dell'esame
 class ApiService {
   ApiService._instantiate();
 
@@ -15,7 +16,7 @@ class ApiService {
     String name,
   ) async {
     Map<String, String> parameters = {
-      'q': '$name per università',
+      'q': '$name teoria ed esercizi',
       'maxResults': '40',
       'filter': 'partial',
       'printType': 'books',
