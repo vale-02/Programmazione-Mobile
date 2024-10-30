@@ -1,4 +1,5 @@
 import 'package:brainiac/book/api_service.dart';
+import 'package:brainiac/book/widget/book_view.dart';
 import 'package:brainiac/model/book.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,8 @@ class _BookScreen extends State<BookScreen> {
           ? ListView.builder(
               itemCount: _result.length,
               itemBuilder: (context, index) {
-                return _buildBook(_result[index]);
+                return BookView(onDelete: () => setState(() {}))
+                    .buildBook(context, _result[index]);
               })
           : Center(
               child: CircularProgressIndicator(),
@@ -41,37 +43,5 @@ class _BookScreen extends State<BookScreen> {
     setState(() {
       _result = book;
     });
-  }
-
-  Widget _buildBook(Book book) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
-      padding: EdgeInsets.all(5.0),
-      child: Row(
-        children: [
-          Image.network(
-            book.thumbnailUrl,
-            width: 150.0,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                width: 150.0,
-                height: 140.0,
-                color: Colors.grey, // Colore di sfondo per l'errore
-                child: Icon(Icons.error), // Icona di errore
-              );
-            },
-          ),
-          SizedBox(
-            width: 10.0,
-          ),
-          Expanded(
-            child: Text(
-              book.title,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

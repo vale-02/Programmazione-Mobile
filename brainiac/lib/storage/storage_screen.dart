@@ -1,3 +1,5 @@
+import 'package:brainiac/book/widget/book_view.dart';
+import 'package:brainiac/model/book.dart';
 import 'package:brainiac/model/playlist.dart';
 import 'package:brainiac/model/video.dart';
 import 'package:brainiac/youtube/widget/playlist_view.dart';
@@ -75,10 +77,10 @@ class _StorageScreenState extends State<StorageScreen> {
               } else if (item is Playlist) {
                 return PlaylistView(onDelete: () => setState(() {}))
                     .builPlaylist(context, item, delete: true);
-              } /*else if (item is Book) {
-                
-              } */
-              else {
+              } else if (item is Book) {
+                return BookView(onDelete: () => setState(() {}))
+                    .buildBook(context, item, delete: true);
+              } else {
                 return Text('Nessuno oggetto selezionato');
               }
             },
