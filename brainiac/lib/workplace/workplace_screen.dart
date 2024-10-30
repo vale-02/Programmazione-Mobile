@@ -1,5 +1,5 @@
 import 'package:brainiac/model/year.dart';
-import 'package:brainiac/workplace/widget/delete_db.dart';
+import 'package:brainiac/workplace/widget/menu.dart';
 import 'package:brainiac/workplace/widget/floatingactionbutton_workplace.dart';
 import 'package:brainiac/workplace/widget/list_exam.dart';
 import 'package:brainiac/years/year_selectionmodel.dart';
@@ -19,7 +19,7 @@ class WorkplaceScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('WORKPLACE'),
         actions: [
-          DeleteDb(),
+          Menu(),
         ],
       ),
       floatingActionButton:
@@ -30,6 +30,9 @@ class WorkplaceScreen extends StatelessWidget {
         future: Future.wait([
           Hive.openBox('ExamBox'),
           Hive.openBox('YearBox'),
+          Hive.openBox('VideoBox'),
+          Hive.openBox('PlaylistBox'),
+          Hive.openBox('BookBox'),
         ]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {

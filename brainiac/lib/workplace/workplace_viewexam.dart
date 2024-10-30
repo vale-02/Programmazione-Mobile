@@ -1,4 +1,6 @@
+import 'package:brainiac/book/book_screen.dart';
 import 'package:brainiac/workplace/workplace_editexam.dart';
+import 'package:brainiac/youtube/youtube_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -76,6 +78,30 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
                   widget.description,
                 ),
               ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        YoutubeScreen(searchName: widget.name),
+                  ),
+                );
+              },
+              child: Text('Genera video'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => BookScreen(searchName: widget.name),
+                  ),
+                );
+              },
+              child: Text('Genera libri'),
             ),
           ],
         ),
