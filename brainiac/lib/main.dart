@@ -1,9 +1,9 @@
+import 'package:brainiac/homepage/homepage.dart';
 import 'package:brainiac/model/book.dart';
 import 'package:brainiac/model/exam.dart';
 import 'package:brainiac/model/playlist.dart';
 import 'package:brainiac/model/video.dart';
 import 'package:brainiac/model/year.dart';
-import 'package:brainiac/workplace/workplace_screen.dart';
 import 'package:brainiac/years/year_selectionmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -40,7 +40,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: WorkplaceScreen(),
+      home: SafeArea(
+        child: HomePage(),
+      ),
     );
   }
 }
