@@ -84,10 +84,33 @@ class WorkplaceScreen extends StatelessWidget {
                   child: ValueListenableBuilder(
                     valueListenable: yearBox.listenable(),
                     builder: (context, Box box, child) {
-                      if (selectedYear == -1) {
+                      if (Hive.box('YearBox').isEmpty) {
                         return Center(
-                          child: Text(
-                              'Seleziona un anno per visualizzare gli esami'),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              'Aggiungi un anno con il pulsante in alto a sinistra',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 224, 193, 255),
+                                fontFamily: 'Museo Moderno',
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      } else if (selectedYear == -1) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              'Seleziona un anno per visualizzare gli esami',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 224, 193, 255),
+                                fontFamily: 'Museo Moderno',
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                         );
                       } else {
                         Year? selectedYearData;
@@ -102,8 +125,18 @@ class WorkplaceScreen extends StatelessWidget {
                         if (selectedYearData != null) {
                           if (selectedYearData.exams!.isEmpty) {
                             return Center(
-                              child: Text(
-                                  'Non ci sono esami inseriti per questo anno'),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  'Non ci sono esami inseriti per questo anno',
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 224, 193, 255),
+                                    fontFamily: 'Museo Moderno',
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             );
                           } else {
                             return ListExam(
@@ -114,8 +147,18 @@ class WorkplaceScreen extends StatelessWidget {
                           }
                         } else {
                           return Center(
-                            child: Text(
-                                'Errore nella selezione dell\'anno da visualizzare'),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Text(
+                                'Errore nella selezione dell\'anno da visualizzare',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 224, 193, 255),
+                                  fontFamily: 'Museo Moderno',
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           );
                         }
                       }

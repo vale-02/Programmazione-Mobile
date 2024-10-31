@@ -3,6 +3,7 @@ import 'package:brainiac/model/year.dart';
 import 'package:brainiac/workplace/workplace_viewexam.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 // ignore: must_be_immutable
 class ListExam extends StatelessWidget {
@@ -28,7 +29,7 @@ class ListExam extends StatelessWidget {
       itemCount: year.exams?.length,
       itemBuilder: (context, index) {
         final helper = year.exams?[index];
-        return GestureDetector(
+        return ListTile(
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -45,19 +46,33 @@ class ListExam extends StatelessWidget {
               ),
             );
           },
-          child: ListTile(
-            leading: IconButton(
-              onPressed: () {
-                _deleteExamMessage(context, helper);
-              },
-              icon: Icon(Icons.delete),
+          leading: IconButton(
+            onPressed: () {
+              _deleteExamMessage(context, helper);
+            },
+            icon: HugeIcon(
+              icon: HugeIcons.strokeRoundedDelete02,
+              color: Color.fromARGB(255, 235, 16, 16),
+              size: 20,
             ),
-            title: Text(helper!.name),
-            subtitle: Text(helper.cfu.toString()),
-            trailing: Icon(helper.status
-                ? Icons.check_circle_outlined
-                : Icons.pending_outlined),
           ),
+          title: Text(helper!.name),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Museo Moderno',
+          ),
+          subtitle: Text('CFU : ${helper.cfu.toString()}'),
+          subtitleTextStyle: TextStyle(
+            color: Color.fromARGB(255, 224, 193, 255),
+            fontFamily: 'Museo Moderno',
+          ),
+          trailing: helper.status
+              ? HugeIcon(
+                  icon: HugeIcons.strokeRoundedCheckmarkBadge02,
+                  color: Colors.lightGreenAccent)
+              : HugeIcon(
+                  icon: HugeIcons.strokeRoundedLoading02,
+                  color: Colors.lightBlueAccent),
         );
       },
     );
@@ -70,33 +85,63 @@ class ListExam extends StatelessWidget {
       useSafeArea: true,
       builder: (context) => AlertDialog(
         scrollable: true,
-        title: Text('Elimina esame'),
-        content: Text('Vuoi eliminare definitivamente questo esame?'),
+        title: Text(
+          'Elimina esame',
+          textAlign: TextAlign.center,
+        ),
+        titleTextStyle: TextStyle(
+          color: Color.fromARGB(255, 224, 193, 255),
+          fontFamily: 'Museo Moderno',
+        ),
+        content: Text(
+          'Vuoi eliminare definitivamente ${helper!.name} ?',
+          textAlign: TextAlign.center,
+        ),
+        contentTextStyle: TextStyle(
+          fontFamily: 'Museo Moderno',
+        ),
         actions: [
-          ElevatedButton(
-            onPressed: () {
-              int selectedIndex = -1;
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  int selectedIndex = -1;
 
-              for (int i = 0; i < yearBox.length; i++) {
-                final yearData = yearBox.getAt(i) as Year;
-                if (yearData.year == selectedYear) {
-                  year = yearData;
-                  selectedIndex = i;
-                  break;
-                }
-              }
+                  for (int i = 0; i < yearBox.length; i++) {
+                    final yearData = yearBox.getAt(i) as Year;
+                    if (yearData.year == selectedYear) {
+                      year = yearData;
+                      selectedIndex = i;
+                      break;
+                    }
+                  }
 
-              year.exams!.removeWhere((item) => item.id == helper!.id);
-              yearBox.putAt(selectedIndex, year);
-              Navigator.pop(context);
-            },
-            child: Text('Elimina'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Annulla'),
+                  year.exams!.removeWhere((item) => item.id == helper.id);
+                  yearBox.putAt(selectedIndex, year);
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Elimina',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 235, 16, 16),
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Annulla',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 224, 193, 255),
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
