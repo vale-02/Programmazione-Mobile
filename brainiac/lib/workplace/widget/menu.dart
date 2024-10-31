@@ -2,6 +2,7 @@ import 'package:brainiac/storage/storage_screen.dart';
 import 'package:brainiac/years/year_selectionmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
 
 class Menu extends StatelessWidget {
@@ -11,87 +12,141 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        showMenu(
-          context: context,
-          position: RelativeRect.fromLTRB(100.0, 100.0, 0.0, 0.0),
-          items: [
-            PopupMenuItem(
-              value: 'storage',
-              child: Row(
-                children: [
-                  Text('Archivio'),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Icon(Icons.folder_open_outlined),
-                ],
-              ),
+        onPressed: () {
+          showMenu(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
             ),
-            PopupMenuItem(
-                value: 'delete',
+            context: context,
+            position: RelativeRect.fromLTRB(100.0, 70.0, 0.0, 0.0),
+            items: [
+              PopupMenuItem(
+                value: 'storage',
                 child: Row(
                   children: [
-                    Text('Elimina tutti i dati'),
+                    HugeIcon(
+                      icon: HugeIcons.strokeRoundedFolder01,
+                      color: Color(0xFFFC8D0A),
+                      size: 20,
+                    ),
                     SizedBox(
                       width: 8,
                     ),
-                    Icon(Icons.delete_forever_rounded),
+                    Text(
+                      'Archivio',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: 'Museo Moderno',
+                      ),
+                    ),
                   ],
-                )),
-          ],
-        ).then((value) => {
-              if (value == 'storage')
-                {
-                  Navigator.push(
-                    // ignore: use_build_context_synchronously
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => StorageScreen(),
+                ),
+              ),
+              PopupMenuItem(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      HugeIcon(
+                        icon: HugeIcons.strokeRoundedDelete02,
+                        color: Color.fromARGB(255, 235, 16, 16),
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        'Elimina dati',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'Museo Moderno',
+                        ),
+                      ),
+                    ],
+                  )),
+            ],
+          ).then((value) => {
+                if (value == 'storage')
+                  {
+                    Navigator.push(
+                      // ignore: use_build_context_synchronously
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => StorageScreen(),
+                      ),
                     ),
-                  ),
-                }
-              else if (value == 'delete')
-                {
-                  showDialog(
-                    // ignore: use_build_context_synchronously
-                    context: context,
-                    useSafeArea: true,
-                    builder: (context) => AlertDialog(
-                      scrollable: true,
-                      title: Text('Eliminare tutti i dati'),
-                      content: Text(
-                          'Vuoi eliminare definitivamente tutti i dati sul dispositivo?'),
-                      actions: [
-                        ElevatedButton(
-                          onPressed: () {
-                            final model = Provider.of<YearSelectionModel>(
-                                context,
-                                listen: false);
-                            Hive.box('YearBox').clear();
-                            Hive.box('ExamBox').clear();
-                            Hive.box('VideoBox').clear();
-                            Hive.box('PlaylistBox').clear();
-                            Hive.box('BookBox').clear();
+                  }
+                else if (value == 'delete')
+                  {
+                    showDialog(
+                      // ignore: use_build_context_synchronously
+                      context: context,
+                      useSafeArea: true,
+                      builder: (context) => AlertDialog(
+                        title: Text(
+                          'Elimina dati',
+                          textAlign: TextAlign.center,
+                        ),
+                        titleTextStyle: TextStyle(
+                          color: Color.fromARGB(255, 224, 193, 255),
+                          fontFamily: 'Museo Moderno',
+                        ),
+                        content: Text(
+                          'Vuoi eliminare definitivamente tutti i dati sul dispositivo?',
+                          textAlign: TextAlign.center,
+                        ),
+                        contentTextStyle: TextStyle(
+                          fontFamily: 'Museo Moderno',
+                        ),
+                        actions: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  final model = Provider.of<YearSelectionModel>(
+                                      context,
+                                      listen: false);
+                                  Hive.box('YearBox').clear();
+                                  Hive.box('ExamBox').clear();
+                                  Hive.box('VideoBox').clear();
+                                  Hive.box('PlaylistBox').clear();
+                                  Hive.box('BookBox').clear();
 
-                            model.resetYear();
-                            Navigator.pop(context);
-                          },
-                          child: Text('Elimina'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Annulla'),
-                        ),
-                      ],
-                    ),
-                  )
-                }
-            });
-      },
-      icon: Icon(Icons.menu_rounded),
-    );
+                                  model.resetYear();
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  'Elimina',
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 235, 16, 16),
+                                    fontFamily: 'Museo Moderno',
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  'Annulla',
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 224, 193, 255),
+                                    fontFamily: 'Museo Moderno',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  }
+              });
+        },
+        icon: Icon(
+          Icons.menu_rounded,
+          color: Colors.white,
+          size: 30,
+        ));
   }
 }

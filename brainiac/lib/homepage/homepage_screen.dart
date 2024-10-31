@@ -1,4 +1,4 @@
-import 'package:brainiac/homepage/widget/decoration.dart';
+import 'package:brainiac/homepage/widget/decoration_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
@@ -20,6 +20,7 @@ class HomepageScreen extends StatelessWidget {
       body: Stack(
         alignment: Alignment.center,
         children: [
+          // Titolo HomePage
           GradientText(
             Text(
               'Brainiac',
@@ -35,13 +36,13 @@ class HomepageScreen extends StatelessWidget {
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
+          // Decorazioni
           DecorationsCircle(),
+          // Icona laurea
           Transform.translate(
-            offset:
-                const Offset(-60, -120), // Sposta l'icona in alto e a sinistra
+            offset: const Offset(-60, -120),
             child: Transform.rotate(
-              angle:
-                  -0.3, // Rotazione in radianti (es. -0.1 è circa -5.7 gradi)
+              angle: -0.3,
               child: HugeIcon(
                 icon: HugeIcons.strokeRoundedLaurelWreath01,
                 color: Colors.white,
@@ -49,6 +50,7 @@ class HomepageScreen extends StatelessWidget {
               ),
             ),
           ),
+          // Scritta con freccia per dire all'utente cosa fare
           Column(
             verticalDirection: VerticalDirection.up,
             children: [

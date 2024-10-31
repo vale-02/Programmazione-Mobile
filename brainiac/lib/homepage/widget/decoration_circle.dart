@@ -9,7 +9,7 @@ class DecorationsCircle extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Align(
-          alignment: Alignment(-0.8, 0.3), // Posizione relativa
+          alignment: Alignment(-0.8, 0.3),
           child: Container(
             width: 8,
             height: 8,
@@ -20,7 +20,7 @@ class DecorationsCircle extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: Alignment(0.4, 0.37), // Posizione relativa
+          alignment: Alignment(0.4, 0.37),
           child: Container(
             width: 7,
             height: 7,
@@ -31,7 +31,7 @@ class DecorationsCircle extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: Alignment(0.55, -0.27), // Posizione relativa
+          alignment: Alignment(0.55, -0.27),
           child: Container(
             width: 7,
             height: 7,
@@ -42,7 +42,7 @@ class DecorationsCircle extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: Alignment(0.4, -0.35), // Posizione relativa
+          alignment: Alignment(0.4, -0.35),
           child: Container(
             width: 7,
             height: 7,
@@ -53,7 +53,7 @@ class DecorationsCircle extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: Alignment(0.35, 0.42), // Posizione relativa
+          alignment: Alignment(0.35, 0.42),
           child: Container(
             width: 7,
             height: 7,
@@ -64,7 +64,7 @@ class DecorationsCircle extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: Alignment(-0.6, -0.2), // Posizione relativa
+          alignment: Alignment(-0.6, -0.2),
           child: Container(
             width: 10,
             height: 10,
@@ -75,7 +75,7 @@ class DecorationsCircle extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: Alignment(0.9, -0.1), // Posizione relativa
+          alignment: Alignment(0.9, -0.1),
           child: Container(
             width: 10,
             height: 10,

@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePage();
 }
 
+// Funzionalità scorrimento tra la home e la workplace
 class _HomePage extends State<HomePage> {
   final PageController _pageController = PageController();
   int _currentPageIndex = 0;

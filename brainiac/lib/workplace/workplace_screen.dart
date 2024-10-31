@@ -5,6 +5,7 @@ import 'package:brainiac/workplace/widget/list_exam.dart';
 import 'package:brainiac/years/year_selectionmodel.dart';
 import 'package:brainiac/years/years_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gradient_text/flutter_gradient_text.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,30 @@ class WorkplaceScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('WORKPLACE'),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Container(
+            height: 1,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Museo Moderno',
+        ),
+        title: GradientText(
+          Text(
+            'AREA DI LAVORO',
+          ),
+          colors: [
+            Color(0xFFFC8D0A),
+            Color(0xFFFE2C8D),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
         actions: [
           Menu(),
         ],
