@@ -15,7 +15,11 @@ class YearAdd extends StatelessWidget {
               Hive.box('YearBox').add(value);
             }
           : () {},
-      icon: Icon(Icons.add),
+      icon: Icon(
+        Icons.add_circle_rounded,
+        color: Colors.white,
+        size: 30,
+      ),
     );
   }
 

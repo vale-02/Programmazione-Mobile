@@ -1,8 +1,10 @@
 import 'package:brainiac/model/year.dart';
 import 'package:brainiac/years/year_add.dart';
 import 'package:brainiac/years/year_delete_select.dart';
+import 'package:brainiac/years/year_selectionmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class YearsScreen extends StatefulWidget {
@@ -19,6 +21,9 @@ class _YearsScreen extends State<YearsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final yearSelectionModel = context.watch<YearSelectionModel>();
+    int selectedYear = yearSelectionModel.selectedYear;
+
     return Row(
       children: [
         ValueListenableBuilder(
@@ -44,6 +49,7 @@ class _YearsScreen extends State<YearsScreen> {
                 List<Widget> yearButtons = years.map((year) {
                   return YearDeleteSelect(
                     selectedYear: year,
+                    isSelected: year.year == selectedYear,
                     onYearSelected: widget.onYearSelected,
                   );
                 }).toList();
