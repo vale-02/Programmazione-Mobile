@@ -1,4 +1,5 @@
 import 'package:brainiac/homepage/widget/decoration_circle.dart';
+import 'package:brainiac/workplace/workplace_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
@@ -57,15 +58,23 @@ class HomepageScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              HugeIcon(
-                  icon: HugeIcons.strokeRoundedArrowUp01,
-                  color: Colors.white,
-                  size: 25),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WorkplaceScreen()),
+                  );
+                },
+                icon: HugeIcon(
+                    icon: HugeIcons.strokeRoundedArrowDown01,
+                    color: Colors.white,
+                    size: 25),
+              ),
               SizedBox(
                 height: 8,
               ),
               Text(
-                'Scorri verso l\'alto per accedere',
+                'Premi la freccia per accedere',
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'Museo Moderno',

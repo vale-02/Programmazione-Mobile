@@ -1,4 +1,4 @@
-import 'package:brainiac/homepage/homepage.dart';
+import 'package:brainiac/homepage/homepage_screen.dart';
 import 'package:brainiac/model/book.dart';
 import 'package:brainiac/model/exam.dart';
 import 'package:brainiac/model/playlist.dart';
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       home: SafeArea(
-        child: HomePage(),
+        child: HomepageScreen(),
       ),
     );
   }
