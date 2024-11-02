@@ -63,6 +63,7 @@ class YearDeleteSelect extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         contentTextStyle: TextStyle(
+          color: Colors.white,
           fontFamily: 'Museo Moderno',
         ),
         actions: [

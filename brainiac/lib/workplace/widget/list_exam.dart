@@ -1,6 +1,6 @@
 import 'package:brainiac/model/exam.dart';
 import 'package:brainiac/model/year.dart';
-import 'package:brainiac/workplace/workplace_viewexam.dart';
+import 'package:brainiac/view/workplace_viewexam.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hugeicons/hugeicons.dart';
