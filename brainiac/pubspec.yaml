@@ -48,6 +48,7 @@ dependencies:
   scaffold_gradient_background: ^1.0.3+1
   flutter_gradient_text: ^1.0.1
   hugeicons: ^0.0.7
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
