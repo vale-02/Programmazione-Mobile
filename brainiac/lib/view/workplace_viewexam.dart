@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:brainiac/book/book_screen.dart';
+import 'package:brainiac/workplace/widget/details_exam.dart';
+import 'package:brainiac/workplace/widget/video_book_buttons.dart';
 import 'package:brainiac/workplace/workplace_editexam.dart';
-import 'package:brainiac/youtube/youtube_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -78,74 +78,10 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
             SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Text(
-                        widget.cfu.toString(),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Museo Moderno',
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'CFU',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Museo Moderno',
-                      ),
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    widget.status
-                        ? HugeIcon(
-                            icon: HugeIcons.strokeRoundedCheckmarkBadge02,
-                            color: Colors.lightGreenAccent,
-                            size: 40,
-                          )
-                        : HugeIcon(
-                            icon: HugeIcons.strokeRoundedLoading02,
-                            color: Colors.lightBlueAccent,
-                            size: 40,
-                          ),
-                    Text(
-                      _getStatus(),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Museo Moderno',
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Color(0xFFFC8D0A),
-                      child: Text(
-                        _getGrade(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Museo Moderno',
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'Voto',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Museo Moderno',
-                      ),
-                    ),
-                  ],
-                )
-              ],
+            DetailsExam(
+              cfu: widget.cfu,
+              status: widget.status,
+              grade: widget.grade,
             ),
             SizedBox(
               height: 30,
@@ -187,81 +123,11 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
             SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            YoutubeScreen(searchName: widget.name),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      HugeIcon(
-                        icon: HugeIcons.strokeRoundedYoutube,
-                        color: Colors.red,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        'Video',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Museo Moderno',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            BookScreen(searchName: widget.name),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      HugeIcon(
-                        icon: HugeIcons.strokeRoundedBookBookmark02,
-                        color: Colors.blue,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        'Libri',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Museo Moderno',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            VideoBookButtons(name: widget.name),
           ],
         ),
       ),
     );
-  }
-
-  String _getStatus() {
-    return widget.status ? 'Superato' : 'In corso';
-  }
-
-  String _getGrade() {
-    return widget.grade == 0 ? '' : widget.grade.toString();
   }
 
   // Funzione per la modifica dell'esame che si sta vedendo e aggiornamento dei dati relativi ad esso
