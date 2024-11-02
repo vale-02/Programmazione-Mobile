@@ -2,10 +2,12 @@ import 'package:brainiac/model/video.dart';
 import 'package:brainiac/youtube/api_service.dart';
 import 'package:brainiac/view/video_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gradient_text/flutter_gradient_text.dart';
 
 class PlaylistScreen extends StatefulWidget {
-  const PlaylistScreen({super.key, required this.id});
+  const PlaylistScreen({super.key, required this.id, required this.title});
   final String id;
+  final String title;
 
   @override
   State<PlaylistScreen> createState() => _PlaylistScreen();
@@ -25,7 +27,32 @@ class _PlaylistScreen extends State<PlaylistScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Container(
+            height: 1,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Museo Moderno',
+        ),
+        title: GradientText(
+          Text(
+            widget.title,
+          ),
+          colors: [
+            Color(0xFFFC8D0A),
+            Color(0xFFFE2C8D),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+      ),
       body: _video.isNotEmpty
           ? NotificationListener<ScrollNotification>(
               onNotification: (ScrollNotification scroll) {
