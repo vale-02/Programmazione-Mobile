@@ -109,7 +109,17 @@ class Field {
       hintStyle: TextStyle(
         fontFamily: 'Museo Moderno',
       ),
-      border: OutlineInputBorder(),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(17.0),
+      ),
+      floatingLabelStyle: TextStyle(
+        color: Color(0xFFFC8D0A),
+        fontFamily: 'Museo Moderno',
+      ),
+      errorStyle: TextStyle(
+        color: Colors.red,
+        fontFamily: 'Museo Moderno',
+      ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Color(0xFFFC8D0A)),
         borderRadius: BorderRadius.circular(17.0),

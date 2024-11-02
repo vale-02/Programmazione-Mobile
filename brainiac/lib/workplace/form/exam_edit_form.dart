@@ -37,16 +37,35 @@ class ExamEditForm extends StatelessWidget {
           cfuController: cfuController,
         ),
         SizedBox(height: 20),
-        DropdownButton<bool>(
-          value: status,
-          onChanged: onStatusChanged,
-          items: [
-            DropdownMenuItem(value: true, child: Text('Superato')),
-            DropdownMenuItem(value: false, child: Text('In corso')),
-          ],
+        Container(
+          width: 120,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(17.0),
+            border: Border.all(
+              color: Colors.grey,
+              width: 1.0,
+            ),
+          ),
+          child: Center(
+            child: DropdownButton<bool>(
+              value: status,
+              onChanged: onStatusChanged,
+              style: TextStyle(
+                color: Color(0xFFFE2C8D),
+                fontFamily: 'Museo Moderno',
+              ),
+              borderRadius: BorderRadius.circular(17.0),
+              underline: SizedBox.shrink(),
+              items: [
+                DropdownMenuItem(value: true, child: Text('Superato')),
+                DropdownMenuItem(value: false, child: Text('In corso')),
+              ],
+            ),
+          ),
         ),
         SizedBox(height: 20),
         Field().grade(gradeController, status, '0'),
+        SizedBox(height: 20),
       ],
     );
   }
