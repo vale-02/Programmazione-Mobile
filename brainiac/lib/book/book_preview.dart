@@ -29,57 +29,55 @@ class _BookPreview extends State<BookPreview> {
           ),
         ],
       ),
-      body: Expanded(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-                  child: Image.network(
-                    widget.book.thumbnailUrl,
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 140.0,
-                        color: Colors.grey,
-                        child: Icon(Icons.error),
-                      );
-                    },
-                  ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                child: Image.network(
+                  widget.book.thumbnailUrl,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 140.0,
+                      color: Colors.grey,
+                      child: Icon(Icons.error),
+                    );
+                  },
                 ),
-                SizedBox(
-                  height: 10,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                widget.book.title,
+                style: TextStyle(
+                  color: Color(0xFFFE2C8D),
+                  fontSize: 15,
+                  fontFamily: 'Museo Moderno',
                 ),
-                Text(
-                  widget.book.title,
-                  style: TextStyle(
-                    color: Color(0xFFFE2C8D),
-                    fontSize: 15,
-                    fontFamily: 'Museo Moderno',
-                  ),
-                  textAlign: TextAlign.center,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                widget.book.description != 'N/A'
+                    ? widget.book.description
+                    : 'Nessuna descrizione presente per questo libro',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'Museo Moderno',
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  widget.book.description != 'N/A'
-                      ? widget.book.description
-                      : 'Nessuna descrizione presente per questo libro',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: 'Museo Moderno',
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       ),
