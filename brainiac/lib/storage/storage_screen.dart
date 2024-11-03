@@ -1,10 +1,10 @@
 import 'package:brainiac/view/book_view.dart';
-import 'package:brainiac/model/book.dart';
 import 'package:brainiac/model/playlist.dart';
 import 'package:brainiac/model/video.dart';
 import 'package:brainiac/view/playlist_view.dart';
 import 'package:brainiac/view/video_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gradient_text/flutter_gradient_text.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -23,7 +23,22 @@ class _StorageScreenState extends State<StorageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Archivio'),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Museo Moderno',
+        ),
+        title: GradientText(
+          Text(
+            'Archivio',
+          ),
+          colors: [
+            Color(0xFFFC8D0A),
+            Color(0xFFFE2C8D),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: Row(
@@ -35,7 +50,18 @@ class _StorageScreenState extends State<StorageScreen> {
                     currentCategory = 'video';
                   });
                 },
-                child: Text('Video'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: currentCategory == 'video'
+                      ? Color(0xFFFE2C8D)
+                      : Color(0xFFFC8D0A),
+                ),
+                child: Text(
+                  'Video',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -43,7 +69,18 @@ class _StorageScreenState extends State<StorageScreen> {
                     currentCategory = 'playlist';
                   });
                 },
-                child: Text('Playlist'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: currentCategory == 'playlist'
+                      ? Color(0xFFFE2C8D)
+                      : Color(0xFFFC8D0A),
+                ),
+                child: Text(
+                  'Playlist',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -51,7 +88,18 @@ class _StorageScreenState extends State<StorageScreen> {
                     currentCategory = 'book';
                   });
                 },
-                child: Text('Libri'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: currentCategory == 'book'
+                      ? Color(0xFFFE2C8D)
+                      : Color(0xFFFC8D0A),
+                ),
+                child: Text(
+                  'Libri',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
               ),
             ],
           ),
@@ -67,25 +115,39 @@ class _StorageScreenState extends State<StorageScreen> {
           final box = snapshot.data!;
           final items = box.values.toList();
 
-          return ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              final item = items[index];
+          if (items.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  'Nessun elemento salvato in archivio',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 224, 193, 255),
+                    fontFamily: 'Museo Moderno',
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
 
-              if (item is Video) {
-                return VideoView(onDelete: () => setState(() {}))
-                    .buildVideo(context, item, delete: true);
-              } else if (item is Playlist) {
-                return PlaylistView(onDelete: () => setState(() {}))
-                    .builPlaylist(context, item, delete: true);
-              } else if (item is Book) {
-                return BookView(onDelete: () => setState(() {}))
-                    .buildBook(context, item, delete: true);
-              } else {
-                return Text('Nessuno oggetto selezionato');
-              }
-            },
-          );
+                if (item is Video) {
+                  return VideoView(onDelete: () => setState(() {}))
+                      .buildVideo(context, item, delete: true);
+                } else if (item is Playlist) {
+                  return PlaylistView(onDelete: () => setState(() {}))
+                      .builPlaylist(context, item, delete: true);
+                } else {
+                  return BookView(onDelete: () => setState(() {}))
+                      .buildBook(context, item, delete: true);
+                }
+              },
+            );
+          }
         },
       ),
     );

@@ -2,6 +2,7 @@ import 'package:brainiac/model/exam.dart';
 import 'package:brainiac/model/year.dart';
 import 'package:brainiac/workplace/form/exam_edit_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gradient_text/flutter_gradient_text.dart';
 import 'package:hive/hive.dart';
 
 // ignore: must_be_immutable
@@ -70,7 +71,30 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Modifica esame'),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Container(
+            height: 1,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Museo Moderno',
+        ),
+        title: GradientText(
+          Text(
+            'Modifica esame',
+          ),
+          colors: [
+            Color(0xFFFC8D0A),
+            Color(0xFFFE2C8D),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -99,7 +123,16 @@ class _WorkplaceEditexam extends State<WorkplaceEditexam> {
                   onPressed: () {
                     _submit();
                   },
-                  child: Text('Modifica esame'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFFC8D0A),
+                  ),
+                  child: Text(
+                    'Salva modifiche',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Museo Moderno',
+                    ),
+                  ),
                 ),
               ],
             ),

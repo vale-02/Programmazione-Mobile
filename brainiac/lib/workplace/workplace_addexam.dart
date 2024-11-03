@@ -3,6 +3,7 @@ import 'package:brainiac/model/year.dart';
 import 'package:brainiac/workplace/form/exam_add_form.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:flutter_gradient_text/flutter_gradient_text.dart';
 
 class WorkplaceAddexam extends StatefulWidget {
   const WorkplaceAddexam({super.key, required this.selectedYear});
@@ -31,7 +32,30 @@ class _WorkplaceAddexam extends State<WorkplaceAddexam> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inserisci i dati dell\'esame'),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Container(
+            height: 1,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Museo Moderno',
+        ),
+        title: GradientText(
+          Text(
+            'Inserisci esame',
+          ),
+          colors: [
+            Color(0xFFFC8D0A),
+            Color(0xFFFE2C8D),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -49,7 +73,16 @@ class _WorkplaceAddexam extends State<WorkplaceAddexam> {
                   onPressed: () {
                     _submit();
                   },
-                  child: Text('Aggiungi esame'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFFE2C8D),
+                  ),
+                  child: Text(
+                    'Aggiungi esame',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Museo Moderno',
+                    ),
+                  ),
                 ),
               ],
             ),

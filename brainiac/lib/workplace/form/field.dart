@@ -4,11 +4,14 @@ import 'package:flutter/services.dart';
 class Field {
   TextFormField name(TextEditingController controller) {
     return TextFormField(
+      style: TextStyle(
+        fontFamily: 'Museo Moderno',
+      ),
       controller: controller,
       decoration: _errorField('Nome esame'),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Nome esame obbligatorio';
+          return 'Campo obbligatorio';
         }
         return null;
       },
@@ -17,13 +20,16 @@ class Field {
 
   TextFormField cfu(TextEditingController controller) {
     return TextFormField(
+      style: TextStyle(
+        fontFamily: 'Museo Moderno',
+      ),
       controller: controller,
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       decoration: _errorField('CFU'),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Il CFU è obbligatorio';
+          return 'Campo obbligatorio';
         }
         return null;
       },
@@ -33,6 +39,9 @@ class Field {
   TextFormField grade(TextEditingController gradeController,
       bool statusController, String? hintText) {
     return TextFormField(
+      style: TextStyle(
+        fontFamily: 'Museo Moderno',
+      ),
       controller: gradeController,
       keyboardType: TextInputType.number,
       inputFormatters: [
@@ -47,7 +56,7 @@ class Field {
           }
           final grade = int.tryParse(value);
           if (grade == null || grade < 18 || grade > 31) {
-            return 'Il voto deve essere compreso tra 18 e 30';
+            return 'Il voto deve essere compreso tra 18 e 31';
           }
         }
         return null;
@@ -59,12 +68,32 @@ class Field {
   InputDecoration _errorField(String labelText) {
     return InputDecoration(
       labelText: labelText,
-      border: OutlineInputBorder(),
+      labelStyle: TextStyle(
+        fontFamily: 'Museo Moderno',
+      ),
+      floatingLabelStyle: TextStyle(
+        color: Color(0xFFFC8D0A),
+        fontFamily: 'Museo Moderno',
+      ),
+      errorStyle: TextStyle(
+        color: Colors.red,
+        fontFamily: 'Museo Moderno',
+      ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.blue),
+        borderSide: BorderSide(color: Color(0xFFFC8D0A)),
+        borderRadius: BorderRadius.circular(17.0),
       ),
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.red),
+        borderRadius: BorderRadius.circular(17.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey),
+        borderRadius: BorderRadius.circular(17.0),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Color(0xFFFC8D0A)),
+        borderRadius: BorderRadius.circular(17.0),
       ),
     );
   }
@@ -73,13 +102,39 @@ class Field {
   InputDecoration _errorFieldGrade(String labelText, String? hintText) {
     return InputDecoration(
       labelText: labelText,
+      labelStyle: TextStyle(
+        fontFamily: 'Museo Moderno',
+      ),
       hintText: hintText,
-      border: OutlineInputBorder(),
+      hintStyle: TextStyle(
+        fontFamily: 'Museo Moderno',
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(17.0),
+      ),
+      floatingLabelStyle: TextStyle(
+        color: Color(0xFFFC8D0A),
+        fontFamily: 'Museo Moderno',
+      ),
+      errorStyle: TextStyle(
+        color: Colors.red,
+        fontFamily: 'Museo Moderno',
+      ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.blue),
+        borderSide: BorderSide(color: Color(0xFFFC8D0A)),
+        borderRadius: BorderRadius.circular(17.0),
       ),
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.red),
+        borderRadius: BorderRadius.circular(17.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey),
+        borderRadius: BorderRadius.circular(17.0),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Color(0xFFFC8D0A)),
+        borderRadius: BorderRadius.circular(17.0),
       ),
     );
   }

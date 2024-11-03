@@ -10,6 +10,9 @@ class FloatingactionbuttonWorkplace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      mini: true,
+      backgroundColor: Color(0xFFFC8D0A),
+      foregroundColor: Colors.black87,
       onPressed: selectedYear != -1
           ? () {
               Navigator.of(context).push(
@@ -23,8 +26,16 @@ class FloatingactionbuttonWorkplace extends StatelessWidget {
           : () {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Devi selezionare un anno.'),
+                  content: Text(
+                    'Devi selezionare un anno.',
+                    style: TextStyle(
+                      fontFamily: 'Museo Moderno',
+                    ),
+                  ),
                   showCloseIcon: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
                 ),
               );
             },

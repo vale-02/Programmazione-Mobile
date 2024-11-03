@@ -4,10 +4,14 @@ import 'package:hive/hive.dart';
 
 class YearDeleteSelect extends StatelessWidget {
   YearDeleteSelect(
-      {super.key, required this.selectedYear, required this.onYearSelected});
+      {super.key,
+      required this.selectedYear,
+      required this.isSelected,
+      required this.onYearSelected});
   final Year selectedYear;
   final Function(int) onYearSelected;
   final hiveBox = Hive.box('YearBox');
+  final bool isSelected;
 
   /*
     Funzionalità dei bottoni degli anni
@@ -25,7 +29,16 @@ class YearDeleteSelect extends StatelessWidget {
         onPressed: () {
           onYearSelected(selectedYear.year);
         },
-        child: Text('Anno ${selectedYear.year}'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isSelected ? Color(0xFFFE2C8D) : Color(0xFFFC8D0A),
+        ),
+        child: Text(
+          'Anno ${selectedYear.year}',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Museo Moderno',
+          ),
+        ),
       ),
     );
   }
@@ -37,32 +50,63 @@ class YearDeleteSelect extends StatelessWidget {
       useSafeArea: true,
       builder: (context) => AlertDialog(
         scrollable: true,
-        title: Text('Elimina Anno ${selectedYear.year}'),
-        content: Text('Vuoi eliminare definitivamente questo anno?'),
+        title: Text(
+          'Elimina Anno ${selectedYear.year}',
+          textAlign: TextAlign.center,
+        ),
+        titleTextStyle: TextStyle(
+          color: Color.fromARGB(255, 224, 193, 255),
+          fontFamily: 'Museo Moderno',
+        ),
+        content: Text(
+          'Vuoi eliminare definitivamente questo anno?',
+          textAlign: TextAlign.center,
+        ),
+        contentTextStyle: TextStyle(
+          color: Colors.white,
+          fontFamily: 'Museo Moderno',
+        ),
         actions: [
-          ElevatedButton(
-            onPressed: () {
-              int index = -1;
-              for (int i = 0; i < hiveBox.length; i++) {
-                Year storedYear = hiveBox.getAt(i) as Year;
-                if (storedYear.year == selectedYear.year) {
-                  index = i;
-                  break;
-                }
-              }
-              if (index != -1) {
-                hiveBox.deleteAt(index);
-                onYearSelected(-1);
-              }
-              Navigator.pop(context);
-            },
-            child: Text('Elimina'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Annulla'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  int index = -1;
+                  for (int i = 0; i < hiveBox.length; i++) {
+                    Year storedYear = hiveBox.getAt(i) as Year;
+                    if (storedYear.year == selectedYear.year) {
+                      index = i;
+                      break;
+                    }
+                  }
+                  if (index != -1) {
+                    hiveBox.deleteAt(index);
+                    onYearSelected(-1);
+                  }
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Elimina',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 235, 16, 16),
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Annulla',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 224, 193, 255),
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

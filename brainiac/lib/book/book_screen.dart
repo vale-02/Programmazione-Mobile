@@ -24,7 +24,23 @@ class _BookScreen extends State<BookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Container(
+            height: 1,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          color: Colors.blue,
+          fontSize: 20,
+          fontFamily: 'Museo Moderno',
+        ),
+        title: Text('Libri'),
+      ),
       body: _result.isNotEmpty
           ? ListView.builder(
               itemCount: _result.length,

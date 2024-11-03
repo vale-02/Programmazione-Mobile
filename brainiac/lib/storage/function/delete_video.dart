@@ -13,8 +13,22 @@ class DeleteVideo {
       useSafeArea: true,
       builder: (context) => AlertDialog(
         scrollable: true,
-        title: Text('Elimina video'),
-        content: Text('Vuoi eliminare ${video.title} dall\'archivio?'),
+        title: Text(
+          'Elimina video',
+          textAlign: TextAlign.center,
+        ),
+        titleTextStyle: TextStyle(
+          color: Colors.red,
+          fontFamily: 'Museo Moderno',
+        ),
+        content: Text(
+          'Vuoi eliminare ${video.title} dall\'archivio?',
+          textAlign: TextAlign.center,
+        ),
+        contentTextStyle: TextStyle(
+          color: Colors.white,
+          fontFamily: 'Museo Moderno',
+        ),
         actions: [
           ElevatedButton(
             onPressed: () {
@@ -31,13 +45,25 @@ class DeleteVideo {
               onDelete();
               Navigator.pop(context);
             },
-            child: Text('Elimina'),
+            child: Text(
+              'Elimina',
+              style: TextStyle(
+                color: Colors.red,
+                fontFamily: 'Museo Moderno',
+              ),
+            ),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Annulla'),
+            child: Text(
+              'Annulla',
+              style: TextStyle(
+                color: Color.fromARGB(255, 224, 193, 255),
+                fontFamily: 'Museo Moderno',
+              ),
+            ),
           ),
         ],
       ),

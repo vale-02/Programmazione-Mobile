@@ -10,8 +10,22 @@ class AddPlaylist {
       useSafeArea: true,
       builder: (context) => AlertDialog(
         scrollable: true,
-        title: Text('Aggiungi playlist'),
-        content: Text('Vuoi aggiungere ${playlist.title} all\'archivio?'),
+        title: Text(
+          'Aggiungi playlist',
+          textAlign: TextAlign.center,
+        ),
+        titleTextStyle: TextStyle(
+          color: Color.fromARGB(255, 224, 193, 255),
+          fontFamily: 'Museo Moderno',
+        ),
+        content: Text(
+          'Vuoi aggiungere ${playlist.title} all\'archivio?',
+          textAlign: TextAlign.center,
+        ),
+        contentTextStyle: TextStyle(
+          color: Colors.white,
+          fontFamily: 'Museo Moderno',
+        ),
         actions: [
           ElevatedButton(
             onPressed: () {
@@ -26,29 +40,57 @@ class AddPlaylist {
               if (videoExists) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Playlist già presente nell\'archivio'),
+                    content: Text(
+                      'Playlist già presente nell\'archivio',
+                      style: TextStyle(
+                        fontFamily: 'Museo Moderno',
+                      ),
+                    ),
                     showCloseIcon: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
                 );
               } else {
                 Hive.box('PlaylistBox').add(playlist);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Playlist aggiunta all\'archivio'),
+                    content: Text(
+                      'Playlist aggiunta all\'archivio',
+                      style: TextStyle(
+                        fontFamily: 'Museo Moderno',
+                      ),
+                    ),
                     showCloseIcon: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
                 );
               }
 
               Navigator.pop(context);
             },
-            child: Text('Aggiungi'),
+            child: Text(
+              'Aggiungi',
+              style: TextStyle(
+                color: Color(0xFFFC8D0A),
+                fontFamily: 'Museo Moderno',
+              ),
+            ),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Annulla'),
+            child: Text(
+              'Annulla',
+              style: TextStyle(
+                color: Color.fromARGB(255, 224, 193, 255),
+                fontFamily: 'Museo Moderno',
+              ),
+            ),
           ),
         ],
       ),

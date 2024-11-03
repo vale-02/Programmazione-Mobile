@@ -38,6 +38,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  auto_size_text:
+    dependency: "direct main"
+    description:
+      name: auto_size_text
+      sha256: "3f5261cd3fb5f2a9ab4e2fc3fba84fd9fcaac8821f20a1d4e71f557521b22599"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -235,6 +243,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.2.1"
+  flutter_gradient_text:
+    dependency: "direct main"
+    description:
+      name: flutter_gradient_text
+      sha256: "375549aa68c07a2c3ba81870347601c884b5dda4b9a2321fa81c0bca15b9a3f3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   flutter_inappwebview:
     dependency: transitive
     description:
@@ -397,6 +413,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  hugeicons:
+    dependency: "direct main"
+    description:
+      name: hugeicons
+      sha256: b5cf08183a75b7774ca6d601a2ef025ed26550e4fca9d956673ffda91e132411
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   io:
     dependency: transitive
     description:
@@ -621,6 +645,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  scaffold_gradient_background:
+    dependency: "direct main"
+    description:
+      name: scaffold_gradient_background
+      sha256: "904ee5ef0ea69e980cc4c7645418a0cd5ef94732c409f5ac114f74f51b4dd0a7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3+1"
   shelf:
     dependency: transitive
     description:

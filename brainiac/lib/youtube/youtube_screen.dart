@@ -26,7 +26,23 @@ class _YoutubeScreen extends State<YoutubeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Container(
+            height: 1,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          color: Colors.red,
+          fontSize: 20,
+          fontFamily: 'Museo Moderno',
+        ),
+        title: Text('Video'),
+      ),
       body: _result.isNotEmpty
           ? NotificationListener<ScrollNotification>(
               onNotification: (ScrollNotification scroll) {

@@ -1,8 +1,10 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:brainiac/book/book_preview.dart';
 import 'package:brainiac/storage/function/add_book.dart';
 import 'package:brainiac/storage/function/delete_book.dart';
 import 'package:brainiac/model/book.dart';
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class BookView {
   BookView({required this.onDelete});
@@ -23,7 +25,7 @@ class BookView {
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
-        padding: EdgeInsets.all(5.0),
+        padding: EdgeInsets.all(10.0),
         child: Row(
           children: [
             Image.network(
@@ -43,8 +45,16 @@ class BookView {
               width: 10.0,
             ),
             Expanded(
-              child: Text(
+              child: AutoSizeText(
                 book.title,
+                maxLines: 6,
+                minFontSize: 10,
+                stepGranularity: 1,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontFamily: 'Museo Moderno',
+                ),
               ),
             ),
             icon(delete, context, book),
@@ -60,14 +70,20 @@ class BookView {
         onPressed: () {
           AddBook().addBook(context, book);
         },
-        icon: Icon(Icons.folder_open_outlined),
+        icon: HugeIcon(
+          icon: HugeIcons.strokeRoundedFolderAdd,
+          color: Color(0xFFFC8D0A),
+        ),
       );
     }
     return IconButton(
       onPressed: () {
         DeleteBook(onDelete: onDelete).deleteBook(context, book);
       },
-      icon: Icon(Icons.folder_delete_rounded),
+      icon: HugeIcon(
+        icon: HugeIcons.strokeRoundedFolderRemove,
+        color: Color(0xFFFC8D0A),
+      ),
     );
   }
 }
