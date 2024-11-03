@@ -23,6 +23,7 @@ class AddPlaylist {
           textAlign: TextAlign.center,
         ),
         contentTextStyle: TextStyle(
+          color: Colors.white,
           fontFamily: 'Museo Moderno',
         ),
         actions: [

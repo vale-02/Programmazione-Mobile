@@ -13,8 +13,22 @@ class DeletePlaylist {
       useSafeArea: true,
       builder: (context) => AlertDialog(
         scrollable: true,
-        title: Text('Elimina playlist'),
-        content: Text('Vuoi eliminare ${playlist.title} dall\'archivio?'),
+        title: Text(
+          'Elimina playlist',
+          textAlign: TextAlign.center,
+        ),
+        titleTextStyle: TextStyle(
+          color: Colors.red,
+          fontFamily: 'Museo Moderno',
+        ),
+        content: Text(
+          'Vuoi eliminare ${playlist.title} dall\'archivio?',
+          textAlign: TextAlign.center,
+        ),
+        contentTextStyle: TextStyle(
+          color: Colors.white,
+          fontFamily: 'Museo Moderno',
+        ),
         actions: [
           ElevatedButton(
             onPressed: () {
@@ -31,13 +45,25 @@ class DeletePlaylist {
               onDelete();
               Navigator.pop(context);
             },
-            child: Text('Elimina'),
+            child: Text(
+              'Elimina',
+              style: TextStyle(
+                color: Colors.red,
+                fontFamily: 'Museo Moderno',
+              ),
+            ),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Annulla'),
+            child: Text(
+              'Annulla',
+              style: TextStyle(
+                color: Color.fromARGB(255, 224, 193, 255),
+                fontFamily: 'Museo Moderno',
+              ),
+            ),
           ),
         ],
       ),

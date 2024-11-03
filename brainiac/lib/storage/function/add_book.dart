@@ -22,6 +22,10 @@ class AddBook {
           'Vuoi aggiungere ${book.title} all\'archivio?',
           textAlign: TextAlign.center,
         ),
+        contentTextStyle: TextStyle(
+          color: Colors.white,
+          fontFamily: 'Museo Moderno',
+        ),
         actions: [
           ElevatedButton(
             onPressed: () {
