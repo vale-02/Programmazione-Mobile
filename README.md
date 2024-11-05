@@ -22,9 +22,13 @@ Tecnologie usate:
 
 Installazione e configurazione:
 -
-1. Clonare il repository : git clone [https://github.com/vale-02/Programmazione-Mobile](https://github.com/vale-02/Programmazione-Mobile.git)
-                           cd Programmazione-Mobile/brainiac
-2. Installare le dipendenze : flutter pub get
+1. Clonare il repository :
+   ```bash
+   git clone https://github.com/vale-02/Programmazione-Mobile.git
+   cd Programmazione-Mobile/brainiac
+2. Installare le dipendenze :
+   ```bash
+   flutter pub get
 3. Configurare le chiavi API : creare un file nella root del progetto .env e inserire le proprie chiavi nel seguente formato
    ```dotenv
    API_AI=[chiave_api_gemini_ai]
