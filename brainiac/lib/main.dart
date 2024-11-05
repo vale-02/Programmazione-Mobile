@@ -1,10 +1,10 @@
-import 'package:brainiac/homepage/homepage_screen.dart';
-import 'package:brainiac/model/book.dart';
-import 'package:brainiac/model/exam.dart';
-import 'package:brainiac/model/playlist.dart';
-import 'package:brainiac/model/video.dart';
-import 'package:brainiac/model/year.dart';
-import 'package:brainiac/years/year_selectionmodel.dart';
+import 'package:brainiac/views/screen/homepage_screen.dart';
+import 'package:brainiac/models/book.dart';
+import 'package:brainiac/models/exam.dart';
+import 'package:brainiac/models/playlist.dart';
+import 'package:brainiac/models/video.dart';
+import 'package:brainiac/models/year.dart';
+import 'package:brainiac/provider/year_selectionmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
