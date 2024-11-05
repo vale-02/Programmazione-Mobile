@@ -27,70 +27,75 @@ class AddVideo {
           fontFamily: 'Museo Moderno',
         ),
         actions: [
-          ElevatedButton(
-            onPressed: () {
-              bool videoExists = false;
-              for (int i = 0; i < Hive.box('VideoBox').length; i++) {
-                final result = Hive.box('VideoBox').getAt(i) as Video;
-                if (result.title == video.title) {
-                  videoExists = true;
-                  break;
-                }
-              }
-              if (videoExists) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Video già presente nell\'archivio',
-                      style: TextStyle(
-                        fontFamily: 'Museo Moderno',
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  bool videoExists = false;
+                  for (int i = 0; i < Hive.box('VideoBox').length; i++) {
+                    final result = Hive.box('VideoBox').getAt(i) as Video;
+                    if (result.title == video.title) {
+                      videoExists = true;
+                      break;
+                    }
+                  }
+                  if (videoExists) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Video già presente nell\'archivio',
+                          style: TextStyle(
+                            fontFamily: 'Museo Moderno',
+                          ),
+                        ),
+                        showCloseIcon: true,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                    ),
-                    showCloseIcon: true,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                );
-              } else {
-                Hive.box('VideoBox').add(video);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Video aggiunto all\'archivio',
-                      style: TextStyle(
-                        fontFamily: 'Museo Moderno',
+                    );
+                  } else {
+                    Hive.box('VideoBox').add(video);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Video aggiunto all\'archivio',
+                          style: TextStyle(
+                            fontFamily: 'Museo Moderno',
+                          ),
+                        ),
+                        showCloseIcon: true,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                    ),
-                    showCloseIcon: true,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                );
-              }
+                    );
+                  }
 
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Aggiungi',
-              style: TextStyle(
-                color: Color(0xFFFC8D0A),
-                fontFamily: 'Museo Moderno',
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Aggiungi',
+                  style: TextStyle(
+                    color: Color(0xFFFC8D0A),
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
               ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Annulla',
-              style: TextStyle(
-                color: Color.fromARGB(255, 224, 193, 255),
-                fontFamily: 'Museo Moderno',
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Annulla',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 224, 193, 255),
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

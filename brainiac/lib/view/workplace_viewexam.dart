@@ -86,6 +86,10 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
             SizedBox(
               height: 30,
             ),
+            VideoBookButtons(name: widget.name),
+            SizedBox(
+              height: 30,
+            ),
             Center(
               child: Text(
                 'Descrizione :',
@@ -98,7 +102,7 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.55,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -121,10 +125,6 @@ class _WorkplaceViewexam extends State<WorkplaceViewexam> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            VideoBookButtons(name: widget.name),
           ],
         ),
       ),

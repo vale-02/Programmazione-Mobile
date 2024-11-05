@@ -30,40 +30,45 @@ class DeleteBook {
           fontFamily: 'Museo Moderno',
         ),
         actions: [
-          ElevatedButton(
-            onPressed: () {
-              int selectedIndex = -1;
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  int selectedIndex = -1;
 
-              for (int i = 0; i < Hive.box('BookBox').length; i++) {
-                final result = Hive.box('BookBox').getAt(i) as Book;
-                if (result.id == book.id) {
-                  selectedIndex = i;
-                  break;
-                }
-              }
-              Hive.box('BookBox').deleteAt(selectedIndex);
-              onDelete();
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Elimina',
-              style: TextStyle(
-                color: Colors.red,
-                fontFamily: 'Museo Moderno',
+                  for (int i = 0; i < Hive.box('BookBox').length; i++) {
+                    final result = Hive.box('BookBox').getAt(i) as Book;
+                    if (result.id == book.id) {
+                      selectedIndex = i;
+                      break;
+                    }
+                  }
+                  Hive.box('BookBox').deleteAt(selectedIndex);
+                  onDelete();
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Elimina',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
               ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Annulla',
-              style: TextStyle(
-                color: Color.fromARGB(255, 224, 193, 255),
-                fontFamily: 'Museo Moderno',
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Annulla',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 224, 193, 255),
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

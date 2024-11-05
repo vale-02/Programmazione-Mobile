@@ -27,70 +27,75 @@ class AddBook {
           fontFamily: 'Museo Moderno',
         ),
         actions: [
-          ElevatedButton(
-            onPressed: () {
-              bool bookExists = false;
-              for (int i = 0; i < Hive.box('BookBox').length; i++) {
-                final result = Hive.box('BookBox').getAt(i) as Book;
-                if (result.title == book.title) {
-                  bookExists = true;
-                  break;
-                }
-              }
-              if (bookExists) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Libro già presente nell\'archivio',
-                      style: TextStyle(
-                        fontFamily: 'Museo Moderno',
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  bool bookExists = false;
+                  for (int i = 0; i < Hive.box('BookBox').length; i++) {
+                    final result = Hive.box('BookBox').getAt(i) as Book;
+                    if (result.title == book.title) {
+                      bookExists = true;
+                      break;
+                    }
+                  }
+                  if (bookExists) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Libro già presente nell\'archivio',
+                          style: TextStyle(
+                            fontFamily: 'Museo Moderno',
+                          ),
+                        ),
+                        showCloseIcon: true,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                    ),
-                    showCloseIcon: true,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                );
-              } else {
-                Hive.box('BookBox').add(book);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Libro aggiunto all\'archivio',
-                      style: TextStyle(
-                        fontFamily: 'Museo Moderno',
+                    );
+                  } else {
+                    Hive.box('BookBox').add(book);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Libro aggiunto all\'archivio',
+                          style: TextStyle(
+                            fontFamily: 'Museo Moderno',
+                          ),
+                        ),
+                        showCloseIcon: true,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                    ),
-                    showCloseIcon: true,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                );
-              }
+                    );
+                  }
 
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Aggiungi',
-              style: TextStyle(
-                color: Color(0xFFFC8D0A),
-                fontFamily: 'Museo Moderno',
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Aggiungi',
+                  style: TextStyle(
+                    color: Color(0xFFFC8D0A),
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
               ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Annulla',
-              style: TextStyle(
-                color: Color.fromARGB(255, 224, 193, 255),
-                fontFamily: 'Museo Moderno',
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Annulla',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 224, 193, 255),
+                    fontFamily: 'Museo Moderno',
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),
